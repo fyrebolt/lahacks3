@@ -63,7 +63,7 @@
                     const userRef = ref(database, 'users/' + user.uid);
                     get(userRef).then((snapshot) => {
                         if (snapshot.exists()) {
-                            window.location.href = "index.html"; // Redirect on success
+                            window.location.href = "home.html"; // Redirect on success
                         } else {
                             document.getElementById("error-message").innerText = "User not found in database.";
                         }
