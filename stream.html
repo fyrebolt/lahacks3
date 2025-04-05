@@ -1,25 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Phone Input</title>
+  <title>Phone Sensor Stream</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
   <style>
     body { font-family: sans-serif; text-align: center; padding: 2rem; }
-    input, button {
-      font-size: 1.2rem;
-      padding: 0.5rem;
-      margin-top: 1rem;
-      width: 80%;
-      max-width: 300px;
-    }
+    p { font-size: 1.2rem; margin-top: 2rem; }
   </style>
 </head>
 <body>
 
-  <h1>📱 Send a Message</h1>
-  <input id="input" placeholder="Type something... yesss" />
-  <button onclick="sendMessage()">Send</button>
+  <h1>📱 Streaming Accelerometer Data</h1>
   <p id="status">Connecting...</p>
 
   <script>
@@ -30,18 +22,26 @@
 
     peer.on('open', () => {
       conn = peer.connect(peerId);
-      conn.on('open', () => {
-        document.getElementById('status').textContent = 'Connected ✅';
+      DeviceMotionEvent.requestPermission().then(response => {
+        if (response == 'granted') {
+          conn.on('open', () => {
+            document.getElementById('status').textContent = 'Connected ✅ Sending data...';
+    
+            window.addEventListener('devicemotion', event => {
+              const acc = event.acceleration || {};
+              const data = {
+                x: acc.x ?? 0,
+                y: acc.y ?? 0,
+                z: acc.z ?? 0
+              };
+              if (conn.open) {
+                conn.send(data);
+              }
+            });
+          });
+        }
       });
     });
-
-    function sendMessage() {
-      const text = document.getElementById('input').value;
-      if (conn?.open && text) {
-        conn.send(text);
-        document.getElementById('input').value = '';
-      }
-    }
   </script>
 
 </body>
