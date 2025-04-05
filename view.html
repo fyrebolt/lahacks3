@@ -175,9 +175,9 @@
           displacement.z += velocity.z * dt;
 
           const totalVel = Math.sqrt(
-            velocity.x * dt +
-            velocity.y * dt +
-            velocity.z * dt
+            velocity.x ** 2 +
+            velocity.y ** 2 +
+            velocity.z ** 2
           );
           
           const totalDisp = Math.sqrt(
