@@ -159,7 +159,22 @@
         const x = data.x.toFixed(2);
         const y = data.y.toFixed(2);
         const z = data.z.toFixed(2);
-        const mag = Math.sqrt(data.x ** 2 + data.y ** 2 + data.z ** 2).toFixed(2);
+
+        if (Math.abs(x) < 0.08) {
+          x = 0;
+        }
+
+        if (Math.abs(y) < 0.08) {
+          y = 0;
+        }
+
+        if (Math.abs(z) < 0.08) {
+          z = 0;
+        }
+
+        
+        const mag = Math.sqrt(x ** 2 + y ** 2 + z ** 2).toFixed(2);
+        
         document.getElementById('x').textContent = x;
         document.getElementById('y').textContent = y;
         document.getElementById('z').textContent = z;
@@ -173,9 +188,9 @@
             velocity = { x: 0, y: 0, z: 0 };
           }
           
-          velocity.x += data.x * dt;
-          velocity.y += data.y * dt;
-          velocity.z += data.z * dt;
+          velocity.x += x * dt;
+          velocity.y += y * dt;
+          velocity.z += z * dt;
 
           displacement.x += velocity.x * dt;
           displacement.y += velocity.y * dt;
