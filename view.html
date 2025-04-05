@@ -1,73 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Computer Viewer</title>
+  <title>Accelerometer Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <style>
     body { font-family: sans-serif; text-align: center; padding: 2rem; }
     .value { font-size: 1.5rem; margin: 1rem; }
-    button { margin: 1rem; padding: 0.5rem 1.5rem; font-size: 1.2rem; }
+    button { font-size: 1rem; margin: 1rem; padding: 0.5rem 1rem; }
   </style>
 </head>
 <body>
 
-  <h1>📊 Accelerometer Viewer a2</h1>
+  <h1>📟 Computer Viewer</h1>
+  <div id="peer-id">Initializing...</div>
+  <canvas id="qr-code"></canvas>
+
   <div class="value">X: <span id="x">-</span></div>
   <div class="value">Y: <span id="y">-</span></div>
   <div class="value">Z: <span id="z">-</span></div>
-  <div class="value">📈 Magnitude: <span id="mag">-</span></div>
+  <div class="value">Magnitude: <span id="mag">-</span></div>
 
   <button onclick="startCountdown()">Start Recording</button>
   <button onclick="stopRecording()">Stop</button>
   <h2 id="countdown"></h2>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const phoneId = urlParams.get('id');
     const peer = new Peer();
     let conn = null;
     let recording = false;
     let recordedData = [];
 
     peer.on('open', id => {
-      // conn = peer.connect(phoneId);
-      peer.on('connection', connection => {
-        conn = connection
-        conn.on('open', () => {
-          console.log('Connected to phone!');
-          conn.on('data', data => {
-            document.getElementById('x').textContent = data.x.toFixed(2);
-            document.getElementById('y').textContent = data.y.toFixed(2);
-            document.getElementById('z').textContent = data.z.toFixed(2);
-            const mag = Math.sqrt(data.x**2 + data.y**2 + data.z**2);
-            document.getElementById('mag').textContent = mag.toFixed(2);
-  
-            if (recording) recordedData.push({ ...data, timestamp: Date.now() });
-          });
-        });
-      }
-      
+      document.getElementById('peer-id').textContent = `Peer ID: ${id}`;
+      QRCode.toCanvas(document.getElementById('qr-code'), id);
+    });
+
+    peer.on('connection', connection => {
+      conn = connection;
+      conn.on('data', data => {
+        document.getElementById('x').textContent = data.x.toFixed(2);
+        document.getElementById('y').textContent = data.y.toFixed(2);
+        document.getElementById('z').textContent = data.z.toFixed(2);
+        const mag = Math.sqrt(data.x ** 2 + data.y ** 2 + data.z ** 2);
+        document.getElementById('mag').textContent = mag.toFixed(2);
+        if (recording) recordedData.push({ ...data, timestamp: Date.now() });
+      });
     });
 
     function startCountdown() {
       let i = 3;
-      document.getElementById('countdown').textContent = 'Starting in... 3';
-      const countdown = setInterval(() => {
+      document.getElementById('countdown').textContent = `Starting in ${i}`;
+      const interval = setInterval(() => {
         i--;
-        if (i > 0) {
-          document.getElementById('countdown').textContent = `Starting in... ${i}`;
-        } else {
-          clearInterval(countdown);
+        if (i === 0) {
+          clearInterval(interval);
           recording = true;
           document.getElementById('countdown').textContent = 'Recording...';
+        } else {
+          document.getElementById('countdown').textContent = `Starting in ${i}`;
         }
       }, 1000);
     }
 
     function stopRecording() {
       recording = false;
-      document.getElementById('countdown').textContent = 'Recording stopped.';
+      document.getElementById('countdown').textContent = 'Stopped.';
       console.log('Saved data:', recordedData);
     }
   </script>
