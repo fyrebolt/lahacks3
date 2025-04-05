@@ -188,6 +188,7 @@
           //   velocity = { x: 0, y: 0, z: 0 };
           // }
 
+          // bottom limit
           if (Math.abs(x) < 0.12) {
             velocity.x = 0;
           }
@@ -198,6 +199,34 @@
   
           if (Math.abs(z) < 0.12) {
             velocity.z = 0;
+          }
+
+          // upper limit
+          if (Math.abs(x) > 10) {
+            if (x > 0) {
+              velocity.x = 2 + 2 * Math.pow(Math.abs(x), 0.6);
+            }
+            else {
+              velocity.x = (2 + 2 * Math.pow(Math.abs(x), 0.6)) * -1;
+            }
+          }
+  
+          if (Math.abs(y) > 10) {
+            if (y > 0) {
+              velocity.y = 2 + 2 * Math.pow(Math.abs(y), 0.6);
+            }
+            else {
+              velocity.y = (2 + 2 * Math.pow(Math.abs(y), 0.6)) * -1;
+            }
+          }
+  
+          if (Math.abs(z) > 10) {
+            if (z > 0) {
+              velocity.z = 2 + 2 * Math.pow(Math.abs(z), 0.6);
+            }
+            else {
+              velocity.z = (2 + 2 * Math.pow(Math.abs(z), 0.6)) * -1;
+            }
           }
           
           velocity.x += x * dt;
