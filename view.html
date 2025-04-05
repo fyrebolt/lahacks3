@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  <h1>📊 Accelerometer Viewer</h1>
+  <h1>📊 Accelerometer Viewer a2</h1>
   <div class="value">X: <span id="x">-</span></div>
   <div class="value">Y: <span id="y">-</span></div>
   <div class="value">Z: <span id="z">-</span></div>
@@ -31,19 +31,23 @@
     let recordedData = [];
 
     peer.on('open', id => {
-      conn = peer.connect(phoneId);
-      conn.on('open', () => {
-        console.log('Connected to phone!');
-        conn.on('data', data => {
-          document.getElementById('x').textContent = data.x.toFixed(2);
-          document.getElementById('y').textContent = data.y.toFixed(2);
-          document.getElementById('z').textContent = data.z.toFixed(2);
-          const mag = Math.sqrt(data.x**2 + data.y**2 + data.z**2);
-          document.getElementById('mag').textContent = mag.toFixed(2);
-
-          if (recording) recordedData.push({ ...data, timestamp: Date.now() });
+      // conn = peer.connect(phoneId);
+      peer.on('connection', connection => {
+        conn = connection
+        conn.on('open', () => {
+          console.log('Connected to phone!');
+          conn.on('data', data => {
+            document.getElementById('x').textContent = data.x.toFixed(2);
+            document.getElementById('y').textContent = data.y.toFixed(2);
+            document.getElementById('z').textContent = data.z.toFixed(2);
+            const mag = Math.sqrt(data.x**2 + data.y**2 + data.z**2);
+            document.getElementById('mag').textContent = mag.toFixed(2);
+  
+            if (recording) recordedData.push({ ...data, timestamp: Date.now() });
+          });
         });
-      });
+      }
+      
     });
 
     function startCountdown() {
