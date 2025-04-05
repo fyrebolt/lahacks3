@@ -160,15 +160,15 @@
         let y = data.y.toFixed(2);
         let z = data.z.toFixed(2);
 
-        if (Math.abs(x) < 0.15) {
+        if (Math.abs(x) < 0.12) {
           x = 0;
         }
 
-        if (Math.abs(y) < 0.15) {
+        if (Math.abs(y) < 0.12) {
           y = 0;
         }
 
-        if (Math.abs(z) < 0.15) {
+        if (Math.abs(z) < 0.12) {
           z = 0;
         }
 
@@ -188,15 +188,15 @@
           //   velocity = { x: 0, y: 0, z: 0 };
           // }
 
-          if (Math.abs(x) < 0.15) {
+          if (Math.abs(x) < 0.12) {
             velocity.x = 0;
           }
   
-          if (Math.abs(y) < 0.15) {
+          if (Math.abs(y) < 0.12) {
             velocity.y = 0;
           }
   
-          if (Math.abs(z) < 0.15) {
+          if (Math.abs(z) < 0.12) {
             velocity.z = 0;
           }
           
@@ -220,7 +220,7 @@
             displacement.z ** 2
           );
 
-          otherDisp += (mag) * (dt ** 2) / 2;
+          otherDisp += (mag) * (dt ** 2) / 2 + totalVel * dt;
 
           document.getElementById('vel').textContent = totalVel.toFixed(2);
           document.getElementById('disp').textContent = totalDisp.toFixed(2);
