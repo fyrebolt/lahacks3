@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Phone Stream</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</head>
+<body>
+  <h2>📱 Phone Streaming Acceleration</h2>
+  <div id="peer-id">Loading...</div>
+  <canvas id="qrcode"></canvas>
+
+  <script>
+    const peer = new Peer();
+    let conn = null;
+
+    peer.on('open', id => {
+      document.getElementById('peer-id').textContent = `Phone ID: ${id}`;
+      QRCode.toCanvas(document.getElementById('qrcode'), `https://fyrebolt.github.io/acceleration/view.html?id=${id}`);
+    });
+
+    // Wait for computer to connect
+    peer.on('connection', c => {
+      conn = c;
+      conn.on('open', () => {
+        console.log('Connected to computer ✅');
+        startStreaming();
+      });
+    });
+
+    function startStreaming() {
+      DeviceMotionEvent.requestPermission().then(response => {
+        window.addEventListener('devicemotion', event => {
+          const data = {
+            x: event.acceleration?.x ?? 0,
+            y: event.acceleration?.y ?? 0,
+            z: event.acceleration?.z ?? 0
+          };
+          if (conn?.open) conn.send(data);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
