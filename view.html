@@ -34,7 +34,7 @@
 
     peer.on('open', id => {
       document.getElementById('peer-id').textContent = `Peer ID: ${id}`;
-      QRCode.toCanvas(document.getElementById('qr-code'), id);
+      QRCode.toCanvas(document.getElementById('qr-code'), `https://fyrebolt.github.io/lahacks3/stream.html?id=${id}`);
     });
 
     peer.on('connection', connection => {
