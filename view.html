@@ -169,6 +169,10 @@
         if (lastTimestamp !== null) {
           const dt = (now - lastTimestamp) / 1000; // convert ms to seconds
 
+          if (Math.abs(data.x) < 0.05 && Math.abs(data.y) < 0.05 && Math.abs(data.z) < 0.05) {
+            velocity = { x: 0, y: 0, z: 0 };
+          }
+          
           velocity.x += data.x * dt;
           velocity.y += data.y * dt;
           velocity.z += data.z * dt;
