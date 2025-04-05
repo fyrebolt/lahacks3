@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Computer Host</title>
+  <title>Message Receiver</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <style>
     body { font-family: sans-serif; text-align: center; padding: 2rem; }
-    canvas { margin: 1rem auto; }
-    #message { font-size: 1.5rem; margin-top: 2rem; }
+    canvas { margin: 2rem auto; }
+    #message { font-size: 1.5rem; margin-top: 2rem; color: #007bff; }
   </style>
 </head>
 <body>
 
-  <h1>📟 Waiting for message...</h1>
-  <div id="peer-id">Generating ID...</div>
-  <canvas id="qrcode"></canvas>
-  <div id="message">Nothing received yet.</div>
+  <h1>💻 Computer Waiting...</h1>
+  <div id="peer-id">Generating peer ID...</div>
+  <canvas id="qr-code"></canvas>
+
+  <div id="message">No message yet</div>
 
   <script>
     const peer = new Peer();
     let conn;
 
     peer.on('open', id => {
-      document.getElementById('peer-id').textContent = `Peer ID: ${id}`;
-      const phoneUrl = `https://fyrebolt.github.io/lahacks3/stream.html?id=${id}`;
-      QRCode.toCanvas(document.getElementById('qrcode'), phoneUrl);
+      document.getElementById('peer-id').textContent = `Your Peer ID: ${id}`;
+      const streamUrl = `https://fyrebolt.github.io/lahacks3/stream.html?id=${id}`;
+      QRCode.toCanvas(document.getElementById('qr-code'), streamUrl);
     });
 
     peer.on('connection', connection => {
       conn = connection;
-      conn.on('data', data => {
-        document.getElementById('message').textContent = `📩 ${data}`;
+      conn.on('data', msg => {
+        document.getElementById('message').textContent = `📨 Message: ${msg}`;
       });
     });
   </script>
