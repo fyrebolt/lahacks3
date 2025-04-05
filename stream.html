@@ -22,24 +22,20 @@
 
     peer.on('open', () => {
       conn = peer.connect(peerId);
-          conn.on('open', () => {
-            document.getElementById('status').textContent = 'Connected ✅ Sending data...';
-            DeviceMotionEvent.requestPermission().then(response => {
-              if (response == 'granted') {
-                window.addEventListener('devicemotion', event => {
-                  const acc = event.acceleration || {};
-                  const data = {
-                    x: acc.x ?? 0,
-                    y: acc.y ?? 0,
-                    z: acc.z ?? 0
-                  }
-                  if (conn.open) {
-                    conn.send(data);
-                  }
-                });
-              }
-            });
-          });
+      conn.on('open', () => {
+        document.getElementById('status').textContent = 'Connected ✅ Sending data...';
+        window.addEventListener('devicemotion', event => {                  
+          const acc = event.acceleration || {};
+          const data = {
+            x: acc.x ?? 0,
+            y: acc.y ?? 0,
+            z: acc.z ?? 0
+          }
+          if (conn.open) {
+            conn.send(data);
+          }
+        });
+      });
     });
   </script>
 
