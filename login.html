@@ -27,26 +27,25 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-    
-        // Login function
-        window.login = function() {
+
+        // Make functions accessible in global scope
+        window.login = function () {
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
-    
+
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    window.location.href = "index.html"; // Redirect to index.html on success
+                    window.location.href = "index.html"; // Redirect on success
                 })
                 .catch((error) => {
                     document.getElementById("error-message").innerText = error.message;
                 });
         };
-    
-        // Sign Up function
-        window.signUp = function() {
+
+        window.signUp = function () {
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
-    
+
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     alert("Sign-up successful! You can now log in.");
@@ -64,33 +63,5 @@
     <button onclick="login()">Login</button>
     <button onclick="signUp()">Sign Up</button>
     <p id="error-message" style="color: red;"></p>
-
-    <script>
-        function login() {
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    window.location.href = "index.html"; // Redirect to index.html on success
-                })
-                .catch((error) => {
-                    document.getElementById("error-message").innerText = error.message;
-                });
-        }
-
-        function signUp() {
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    alert("Sign-up successful! You can now log in.");
-                })
-                .catch((error) => {
-                    document.getElementById("error-message").innerText = error.message;
-                });
-        }
-    </script>
 </body>
 </html>
