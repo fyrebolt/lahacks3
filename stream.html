@@ -7,7 +7,7 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 <body>
-  <h2>📱 Phone Streaming Acceleration</h2>
+  <h2>📱 Phone Streaming Acceleration code h23</h2>
   <div id="peer-id">Loading...</div>
   <canvas id="qrcode"></canvas>
 
@@ -24,7 +24,7 @@
     peer.on('connection', c => {
       conn = c;
       conn.on('open', () => {
-        console.log('Connected to computer ✅');
+        window.alert('Connected to computer ✅');
         startStreaming();
       });
     });
