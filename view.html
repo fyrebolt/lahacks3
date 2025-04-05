@@ -220,7 +220,7 @@
             displacement.z ** 2
           );
 
-          otherDisp += (mag) * (dt ** 2) / 2 + totalVel * dt;
+          otherDisp += ((mag) * (dt ** 2) / 2 + totalVel * dt) * 0.8;
 
           document.getElementById('vel').textContent = totalVel.toFixed(2);
           document.getElementById('disp').textContent = totalDisp.toFixed(2);
