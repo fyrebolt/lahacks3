@@ -74,7 +74,7 @@
                 });
         };
     </script>
-     <style>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -89,6 +89,7 @@
             align-items: center;
             height: 100vh;
             text-align: center;
+            overflow: hidden;
         }
 
         .login-container {
@@ -103,12 +104,13 @@
         h2 {
             margin-bottom: 20px;
             color: #333333;
+            font-size: 2rem;
         }
 
         input {
             width: 100%;
             padding: 10px;
-            margin: 10px 0;
+            margin: 15px 0;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
@@ -145,14 +147,41 @@
         .signup-link:hover {
             text-decoration: underline;
         }
+
+        /* Styling for buttons and form in mobile view */
+        .login-container {
+            max-width: 350px;
+        }
+
+        input,
+        button {
+            font-size: 1.2rem;
+        }
+
+        .signup-link {
+            font-size: 1rem;
+        }
+
+        /* Styling for larger screens */
+        @media (min-width: 768px) {
+            .login-container {
+                max-width: 400px;
+            }
+
+            input,
+            button {
+                font-size: 1.1rem;
+            }
     </style>
 </head>
 <body>
-    <h2>Login / Sign Up Page</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <button onclick="signUp()">Sign Up</button>
-    <p id="error-message" style="color: red;"></p>
+    <div class="login-container">
+        <h2>Login / Sign Up Page</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <button onclick="signUp()">Sign Up</button>
+        <p id="error-message" style="color: red;"></p>
+    </div>
 </body>
 </html>
