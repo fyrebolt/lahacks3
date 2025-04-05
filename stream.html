@@ -22,28 +22,50 @@
     let conn;
 
     peer.on('open', () => {
-      conn = peer.connect(peerId);
-      conn.on('open', async () => {
-        document.getElementById('status').textContent = 'Connected ✅ Requesting motion permission...';
-    
-        // iOS 13+ requires explicit user permission for motion
-        if (typeof DeviceMotionEvent.requestPermission === 'function') {
-          try {
-            const response = await DeviceMotionEvent.requestPermission();
-            if (response !== 'granted') {
-              document.getElementById('status').textContent = '❌ Motion permission denied';
-              return;
+    conn = peer.connect(peerId);
+  
+    conn.on('open', () => {
+      document.getElementById('status').textContent = 'Connected ✅ Requesting motion permission...';
+  
+      let acc = { x: 0, y: 0, z: 0 };
+  
+      if (typeof DeviceMotionEvent.requestPermission === 'function') {
+        DeviceMotionEvent.requestPermission().then(response => {
+          if (response === 'granted') {
+            if (window.DeviceMotionEvent) {
+              document.getElementById("status").textContent = "Streaming sensor data ✅";
+  
+              window.addEventListener("devicemotion", event => {
+                acc.x = event.acceleration?.x ?? 0;
+                acc.y = event.acceleration?.y ?? 0;
+                acc.z = event.acceleration?.z ?? 0;
+              }, false);
+  
+              setInterval(() => {
+                const data = {
+                  x: acc.x,
+                  y: acc.y,
+                  z: acc.z
+                };
+  
+                if (conn.open) {
+                  conn.send(data);
+                }
+              }, 100); // adjust frequency as needed
+  
+            } else {
+              document.getElementById("status").textContent = "DeviceMotionEvent NOT supported ❌";
             }
-          } catch (err) {
-            document.getElementById('status').textContent = '❌ Error requesting permission';
-            console.error(err);
-            return;
+          } else {
+            document.getElementById('status').textContent = 'Permission denied ❌';
           }
-        }
-    
-        document.getElementById('status').textContent = 'Permission granted ✅ Sending data...';
-    
-        window.addEventListener('devicemotion', event => {
+        }).catch(err => {
+          document.getElementById('status').textContent = 'Error requesting permission ❌';
+          console.error(err);
+        });
+      } else {
+        // Fallback for Android/non-iOS
+        window.addEventListener("devicemotion", event => {
           const acc = event.acceleration || {};
           const data = {
             x: acc.x ?? 0,
@@ -54,8 +76,45 @@
             conn.send(data);
           }
         }, false);
-      });
+      }
     });
+  });
+
+    // peer.on('open', () => {
+    //   conn = peer.connect(peerId);
+    //   conn.on('open', async () => {
+    //     document.getElementById('status').textContent = 'Connected ✅ Requesting motion permission...';
+    
+    //     // iOS 13+ requires explicit user permission for motion
+    //     if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    //       try {
+    //         const response = await DeviceMotionEvent.requestPermission();
+    //         if (response !== 'granted') {
+    //           document.getElementById('status').textContent = '❌ Motion permission denied';
+    //           return;
+    //         }
+    //       } catch (err) {
+    //         document.getElementById('status').textContent = '❌ Error requesting permission';
+    //         console.error(err);
+    //         return;
+    //       }
+    //     }
+    
+    //     document.getElementById('status').textContent = 'Permission granted ✅ Sending data...';
+    
+    //     window.addEventListener('devicemotion', event => {
+    //       const acc = event.acceleration || {};
+    //       const data = {
+    //         x: acc.x ?? 0,
+    //         y: acc.y ?? 0,
+    //         z: acc.z ?? 0
+    //       };
+    //       if (conn.open) {
+    //         conn.send(data);
+    //       }
+    //     }, false);
+    //   });
+    // });
     
     // peer.on('open', () => {
     //   conn = peer.connect(peerId);
