@@ -27,6 +27,33 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
+
+        window.login = function() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+    
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    window.location.href = "index.html"; // Redirect to index.html on success
+                })
+                .catch((error) => {
+                    document.getElementById("error-message").innerText = error.message;
+                });
+        };
+    
+        // Sign Up function
+        window.signUp = function() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+    
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("Sign-up successful! You can now log in.");
+                })
+                .catch((error) => {
+                    document.getElementById("error-message").innerText = error.message;
+                });
+        };
     </script>
 </head>
 <body>
