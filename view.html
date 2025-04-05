@@ -156,9 +156,9 @@
       conn.on('data', data => {
         const now = Date.now();
 
-        const x = data.x.toFixed(2);
-        const y = data.y.toFixed(2);
-        const z = data.z.toFixed(2);
+        let x = data.x.toFixed(2);
+        let y = data.y.toFixed(2);
+        let z = data.z.toFixed(2);
 
         if (Math.abs(x) < 0.08) {
           x = 0;
