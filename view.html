@@ -160,15 +160,15 @@
         let y = data.y.toFixed(2);
         let z = data.z.toFixed(2);
 
-        if (Math.abs(x) < 0.08) {
+        if (Math.abs(x) < 0.15) {
           x = 0;
         }
 
-        if (Math.abs(y) < 0.08) {
+        if (Math.abs(y) < 0.15) {
           y = 0;
         }
 
-        if (Math.abs(z) < 0.08) {
+        if (Math.abs(z) < 0.15) {
           z = 0;
         }
 
@@ -184,8 +184,20 @@
         if (lastTimestamp !== null) {
           const dt = (now - lastTimestamp) / 1000; // convert ms to seconds
 
-          if (Math.abs(data.x) < 0.05 && Math.abs(data.y) < 0.05 && Math.abs(data.z) < 0.05) {
-            velocity = { x: 0, y: 0, z: 0 };
+          // if (Math.abs(data.x) < 0.15 && Math.abs(data.y) < 0.1 && Math.abs(data.z) < 0.1) {
+          //   velocity = { x: 0, y: 0, z: 0 };
+          // }
+
+          if (Math.abs(x) < 0.15) {
+            velocity.x = 0;
+          }
+  
+          if (Math.abs(y) < 0.15) {
+            velocity.y = 0;
+          }
+  
+          if (Math.abs(z) < 0.15) {
+            velocity.z = 0;
           }
           
           velocity.x += x * dt;
@@ -209,8 +221,6 @@
           );
 
           otherDisp += (mag) * (dt ** 2) / 2;
-          // velM += mag * dt;
-          // totalDisp += velM * dt;
 
           document.getElementById('vel').textContent = totalVel.toFixed(2);
           document.getElementById('disp').textContent = totalDisp.toFixed(2);
