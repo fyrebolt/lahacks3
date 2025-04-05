@@ -5,6 +5,9 @@ let connections;
 let poses = [];
 let dotSize = 15;
 
+const currentStretch = document.getElementById("currentStretch")
+const nextStretch = document.getElementById("nextStretch")
+
 function preload() {
   bodyPose = ml5.bodyPose("MoveNet", { flipped: true });
 }
@@ -13,10 +16,19 @@ function mousePressed() {
   console.log(poses);
 }
 
+function getAngle(Ax, Ay, Bx, By, Cx, Cy){
+    b=Math.sqrt((Ax - Bx)**2 + (Ay - By)**2)
+    a=Math.sqrt((Cx - Bx)**2 + (Cy - By)**2)
+    c=Math.sqrt((Ax - Cx)**2 + (Ay - Cy)**2)
+    return 57.3 * Math.acos((a**2 + b**2 - c**2) / (2 * a * b))
+}
+
 function gotPoses(results) {
   poses = results;
   //code starts here
-
+  let pose = poses[0];
+  currentStretch.innerHTML = toDisplay(getAngle(pose.nose.x, pose.nose.y, (pose.right_hip.x + pose.left_hip.x)/2, (pose.right_hip.y + pose.left_hip.y)/2, (pose.right_hip.x + pose.left_hip.x)/2, (pose.right_hip.y + pose.left_hip.y)/2 -1))
+  nextStretch.innerHTML  = toDisplay(getAngle(pose.right_shoulder.x, pose.right_shoulder.y, pose.right_elbow.x, pose.right_elbow.y, ))
 }
 
 function setup() {
