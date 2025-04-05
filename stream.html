@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <h1>📱 Streaming Accelerometer Data</h1>
+  <h1>📱 Streaming Accelerometer Data code asdf asdfkh</h1>
   <p id="status">Connecting...</p>
 
   <script>
@@ -26,16 +26,19 @@
       //   if (response == 'granted') {
           conn.on('open', () => {
             document.getElementById('status').textContent = 'Connected ✅ Sending data...';
-    
-            window.addEventListener('devicemotion', event => {
-              const acc = event.acceleration || {};
-              const data = {
-                x: acc.x ?? 0,
-                y: acc.y ?? 0,
-                z: acc.z ?? 0
-              };
-              if (conn.open) {
-                conn.send(data);
+            DeviceMotionEvent.requestPermission().then(response => {
+              if (response == 'granted') {
+                window.addEventListener('devicemotion', event => {
+                  const acc = event.acceleration || {};
+                  const data = {
+                    x: acc.x ?? 0,
+                    y: acc.y ?? 0,
+                    z: acc.z ?? 0
+                  };
+                  if (conn.open) {
+                    conn.send(data);
+                  }
+                });
               }
             });
           });
