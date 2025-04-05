@@ -1,109 +1,46 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Phone Stream code</title>
+  <title>Phone Sender</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-</head>
-<body>
-  <h2>📱 Phone Streaming Acceleration code h23</h2>
-  <div id="peer-id">Loading...</div>
-  <canvas id="qrcode"></canvas>
-
-  <script>
-    const peer = new Peer();
-    let conn = null;
-
-    peer.on('open', id => {
-      document.getElementById('peer-id').textContent = `Phone ID: ${id}`;
-      QRCode.toCanvas(document.getElementById('qrcode'), `https://fyrebolt.github.io/lahacks3/view.html?id=${id}`);
-    });
-
-    // Wait for computer to connect
-    peer.on('connection', c => {
-      conn = c;
-      conn.on('open', () => {
-        window.alert('Connected to computer ✅');
-        startStreaming();
-      });
-    });
-
-    function startStreaming() {
-      DeviceMotionEvent.requestPermission().then(response => {
-        window.addEventListener('devicemotion', event => {
-          const data = {
-            x: event.acceleration?.x ?? 0,
-            y: event.acceleration?.y ?? 0,
-            z: event.acceleration?.z ?? 0
-          };
-          if (conn?.open) conn.send(data);
-        });
-      });
-    }
-  </script>
-</body>
-</html>
- -->
-
- <!DOCTYPE html>
-<html>
-<head>
-  <title>Phone Sensor Stream</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html5-qrcode"></script>
   <style>
     body { font-family: sans-serif; text-align: center; padding: 2rem; }
-    #reader { width: 250px; margin: auto; }
+    input, button {
+      font-size: 1.2rem;
+      margin: 1rem;
+      padding: 0.5rem;
+      width: 80%;
+    }
   </style>
 </head>
 <body>
 
-  <h1>📱 Scan to Stream code 3w243</h1>
-  <div id="reader"></div>
-  <p id="status">Waiting to scan QR code...</p>
+  <h1>📱 Send a Message</h1>
+  <input type="text" id="textInput" placeholder="Type something..." />
+  <button onclick="sendMessage()">Send</button>
+  <div id="status">Connecting...</div>
 
   <script>
-    let conn = null;
     const peer = new Peer();
+    const params = new URLSearchParams(window.location.search);
+    const hostId = params.get('id');
+    let conn;
 
-    function startStreaming(computerId) {
-      document.getElementById('status').textContent = `Connecting to ${computerId}...`;
-      conn = peer.connect(computerId);
-
+    peer.on('open', id => {
+      conn = peer.connect(hostId);
       conn.on('open', () => {
-        document.getElementById('status').textContent = 'Connected ✅ Streaming data...';
-        DeviceMotionEvent.requestPermission().then(response => {
-          window.addEventListener('devicemotion', event => {
-            const data = {
-              x: event.acceleration?.x ?? 0,
-              y: event.acceleration?.y ?? 0,
-              z: event.acceleration?.z ?? 0
-            };
-            if (conn?.open) conn.send(data);
-          });
-        });
-      }
-    }
-
-    function onScanSuccess(qrCodeMessage) {
-      html5QrCode.stop().then(() => {
-        document.getElementById('reader').style.display = 'none';
-        startStreaming(qrCodeMessage.trim());
+        document.getElementById('status').textContent = 'Connected ✅';
       });
-    }
-
-    const html5QrCode = new Html5Qrcode("reader");
-    Html5Qrcode.getCameras().then(devices => {
-      if (devices && devices.length) {
-        html5QrCode.start(
-          devices[0].id,
-          { fps: 10, qrbox: 200 },
-          onScanSuccess
-        );
-      }
     });
+
+    function sendMessage() {
+      const msg = document.getElementById('textInput').value;
+      if (conn?.open) {
+        conn.send(msg);
+      }
+    }
   </script>
+
 </body>
 </html>
