@@ -120,6 +120,7 @@
   
   <div class="value">Velocity: <span id="vel">0.00</span> m/s</div>
   <div class="value"> code asdf asf Displacement: <span id="disp">0.00</span> m</div>
+  <div class="value"> Other Displacement: <span id="disp">0.00</span> m</div>
 
   <button id="startBtn" onclick="startCountdown()" disabled>Start Recording</button>
   <button id="stopBtn" onclick="stopRecording()" disabled>Stop</button>
@@ -162,6 +163,8 @@
         document.getElementById('z').textContent = z;
         document.getElementById('mag').textContent = mag;
 
+        let otherDisp = 0;
+        
         // Integrate acceleration to velocity and displacement
         if (lastTimestamp !== null) {
           const dt = (now - lastTimestamp) / 1000; // convert ms to seconds
@@ -186,11 +189,13 @@
             displacement.z ** 2
           );
 
+          otherDisp += (mag ** 2) / 2.0;
           // velM += mag * dt;
           // totalDisp += velM * dt;
 
           document.getElementById('vel').textContent = totalVel.toFixed(2);
           document.getElementById('disp').textContent = totalDisp.toFixed(2);
+          document.getElementById('other').textContent = otherDisp.toFixed(2);
         }
 
         lastTimestamp = now;
