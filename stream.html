@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <title>Phone Sensor Stream</title>
@@ -15,70 +15,30 @@
   <p id="status">Connecting...</p>
 
   <script>
+
+    <button id="startBtn">Start Sensor</button>
+    <p id="status">Waiting for permission...</p>
+    
+    document.getElementById("startBtn").addEventListener("click", async () => {
+      try {
+        const response = await DeviceMotionEvent.requestPermission();
+        if (response === "granted") {
+          document.getElementById("status").textContent = "Permission granted ✅";
+          // Add devicemotion listener here...
+        } else {
+          document.getElementById("status").textContent = "Permission denied ❌";
+        }
+      } catch (err) {
+        document.getElementById("status").textContent = "Error requesting permission ❌";
+        console.error(err);
+      }
+    });
     
     const urlParams = new URLSearchParams(window.location.search);
     const peerId = urlParams.get('id');
     const peer = new Peer();
     let conn;
 
-    peer.on('open', () => {
-    conn = peer.connect(peerId);
-  
-    conn.on('open', () => {
-      document.getElementById('status').textContent = 'Connected ✅ Requesting motion permission...';
-  
-      let acc = { x: 0, y: 0, z: 0 };
-  
-      if (typeof DeviceMotionEvent.requestPermission === 'function') {
-        DeviceMotionEvent.requestPermission().then(response => {
-          if (response === 'granted') {
-            if (window.DeviceMotionEvent) {
-              document.getElementById("status").textContent = "Streaming sensor data ✅";
-  
-              window.addEventListener("devicemotion", event => {
-                acc.x = event.acceleration?.x ?? 0;
-                acc.y = event.acceleration?.y ?? 0;
-                acc.z = event.acceleration?.z ?? 0;
-              }, false);
-  
-              setInterval(() => {
-                const data = {
-                  x: acc.x,
-                  y: acc.y,
-                  z: acc.z
-                };
-  
-                if (conn.open) {
-                  conn.send(data);
-                }
-              }, 100); // adjust frequency as needed
-  
-            } else {
-              document.getElementById("status").textContent = "DeviceMotionEvent NOT supported ❌";
-            }
-          } else {
-            document.getElementById('status').textContent = 'Permission denied ❌';
-          }
-        }).catch(err => {
-          document.getElementById('status').textContent = 'Error requesting permission ❌';
-          console.error(err);
-        });
-      } else {
-        // Fallback for Android/non-iOS
-        window.addEventListener("devicemotion", event => {
-          const acc = event.acceleration || {};
-          const data = {
-            x: acc.x ?? 0,
-            y: acc.y ?? 0,
-            z: acc.z ?? 0
-          };
-          if (conn.open) {
-            conn.send(data);
-          }
-        }, false);
-      }
-    });
-  });
 
     // peer.on('open', () => {
     //   conn = peer.connect(peerId);
@@ -116,24 +76,102 @@
     //   });
     // });
     
-    // peer.on('open', () => {
-    //   conn = peer.connect(peerId);
-    //   conn.on('open', () => {
-    //     document.getElementById('status').textContent = 'Connected ✅ Sending data...';
-    //     DeviceMotionEvent.requestPermission()
-    //     window.addEventListener('devicemotion', event => {                  
-    //       const acc = event.acceleration || {};
-    //       const data = {
-    //         x: acc.x ?? 0,
-    //         y: acc.y ?? 0,
-    //         z: acc.z ?? 0
-    //       }
-    //       if (conn.open) {
-    //         conn.send(data);
-    //       }
-    //     });
-    //   });
-    // });
+    peer.on('open', () => {
+      conn = peer.connect(peerId);
+      conn.on('open', () => {
+        document.getElementById('status').textContent = 'Connected ✅ Sending data...';
+        DeviceMotionEvent.requestPermission()
+        window.addEventListener('devicemotion', event => {                  
+          const acc = event.acceleration || {};
+          const data = {
+            x: acc.x ?? 0,
+            y: acc.y ?? 0,
+            z: acc.z ?? 0
+          }
+          if (conn.open) {
+            conn.send(data);
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
+ -->
+
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>Phone Sensor Stream</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 2rem; }
+    p, button { font-size: 1.2rem; margin-top: 1.5rem; }
+    button { padding: 0.5rem 1.2rem; }
+  </style>
+</head>
+<body>
+
+  <h1>📱 Streaming Accelerometer Data</h1>
+  <p id="status">Connecting to computer...</p>
+  <button id="startBtn" style="display:none;">Start Sensor</button>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const peerId = urlParams.get('id');
+    const peer = new Peer();
+    let conn;
+
+    peer.on('open', () => {
+      conn = peer.connect(peerId);
+      conn.on('open', () => {
+        document.getElementById('status').textContent = 'Connected to computer ✅';
+
+        // Show button for user to start sensor manually (iOS requirement)
+        document.getElementById('startBtn').style.display = 'inline-block';
+
+        document.getElementById('startBtn').addEventListener('click', async () => {
+          // Handle iOS permission
+          if (typeof DeviceMotionEvent.requestPermission === 'function') {
+            try {
+              const response = await DeviceMotionEvent.requestPermission();
+              if (response !== 'granted') {
+                document.getElementById('status').textContent = '❌ Motion permission denied';
+                return;
+              }
+            } catch (err) {
+              document.getElementById('status').textContent = '❌ Error requesting permission';
+              console.error(err);
+              return;
+            }
+          }
+
+          document.getElementById('status').textContent = '📡 Sending motion data...';
+          document.getElementById('startBtn').style.display = 'none';
+
+          let acc = { x: 0, y: 0, z: 0 };
+
+          window.addEventListener('devicemotion', event => {
+            acc.x = event.acceleration?.x ?? 0;
+            acc.y = event.acceleration?.y ?? 0;
+            acc.z = event.acceleration?.z ?? 0;
+          }, false);
+
+          setInterval(() => {
+            const data = {
+              x: acc.x,
+              y: acc.y,
+              z: acc.z
+            };
+            if (conn?.open) {
+              conn.send(data);
+            }
+          }, 100); // update rate in ms
+        });
+      });
+    });
   </script>
 
 </body>
