@@ -4,48 +4,19 @@ let pose;
 let inView = 1
 let ticks = 0
 
-const timer = document.getElementById("timer")
-const currentStretch = document.getElementById("currentStretch")
-const nextStretch = document.getElementById("nextStretch")
-const accuracy = document.getElementById("accuracy")
-errors = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
-
 cameraOn = 1
 dotSize = 15
-myWorkouts = sessionStorage.getItem("workout").split(",")
-    if (myWorkouts[0]=="null"){
-        myWorkouts.push("warrior2")
-    }
+
 
 function visionLoad(){
-    myWorkouts = sessionStorage.getItem("workout").split(",")
-    if (myWorkouts[0]=="null"){
-        myWorkouts.push("warrior2")
-    }
-}
-
-time = 15
-workoutIdeals = {
-    "butterfly": [40, 40, 74, 100, 100],
-    "downwarddog": [160, 160, 125, 25, 25],
-    "crescent": [90, 140, 160, 180, 180],
-    "easy": [50, 50, 75, 100, 100],
-    "triangle": [180, 180, 150, 50, 150],
-    "reversewarrior": [160, 180, 83, 180, 50],
-    "tree": [40, 170, 170, 90, 90],
-    "warrior1": [180, 180, 145, 90, 90],
-    "warrior2": [127, 170, 133, 90, 90],
-    "warrior3": [160, 160, 130, 120, 120],
-
+    
 }
 
 
-currentStretch.innerHTML = toDisplay(myWorkouts[0])
-if (myWorkouts.length > 1){
-    nextStretch.innerHTML = toDisplay(myWorkouts[1])
-} else{
-    nextStretch.innerHTML = "Workout complete!"
-}
+
+
+currentStretch.innerHTML = toDisplay("Currrrrent stretch")
+nextStretch.innerHTML = "Workout complete!"
 
 function setup() {
     var canvas = createCanvas(680, 480);
