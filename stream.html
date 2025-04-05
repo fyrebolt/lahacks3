@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Phone Sender</title>
+  <title>Phone Input</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
   <style>
     body { font-family: sans-serif; text-align: center; padding: 2rem; }
     input, button {
       font-size: 1.2rem;
-      margin: 1rem;
       padding: 0.5rem;
+      margin-top: 1rem;
       width: 80%;
+      max-width: 300px;
     }
   </style>
 </head>
 <body>
 
   <h1>📱 Send a Message</h1>
-  <input type="text" id="textInput" placeholder="Type something..." />
+  <input id="input" placeholder="Type something..." />
   <button onclick="sendMessage()">Send</button>
-  <div id="status">Connecting...</div>
+  <p id="status">Connecting...</p>
 
   <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const peerId = urlParams.get('id');
     const peer = new Peer();
-    const params = new URLSearchParams(window.location.search);
-    const hostId = params.get('id');
     let conn;
 
-    peer.on('open', id => {
-      conn = peer.connect(hostId);
+    peer.on('open', () => {
+      conn = peer.connect(peerId);
       conn.on('open', () => {
         document.getElementById('status').textContent = 'Connected ✅';
       });
     });
 
     function sendMessage() {
-      const msg = document.getElementById('textInput').value;
-      if (conn?.open) {
-        conn.send(msg);
+      const text = document.getElementById('input').value;
+      if (conn?.open && text) {
+        conn.send(text);
+        document.getElementById('input').value = '';
       }
     }
   </script>
