@@ -34,7 +34,7 @@
                     x: acc.x ?? 0,
                     y: acc.y ?? 0,
                     z: acc.z ?? 0
-                  };
+                  }, false);
                   if (conn.open) {
                     conn.send(data);
                   }
