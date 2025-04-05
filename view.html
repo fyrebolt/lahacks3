@@ -117,7 +117,7 @@
   <div class="value">Y: <span id="y">-</span></div>
   <div class="value">Z: <span id="z">-</span></div>
   <div class="value">Magnitude: <span id="mag">-</span></div>
-  <div class="value">Displacement: <span id="disp">0.00</span> m</div>
+  <div class="value"> code asdf asf Displacement: <span id="disp">0.00</span> m</div>
 
   <button id="startBtn" onclick="startCountdown()" disabled>Start Recording</button>
   <button id="stopBtn" onclick="stopRecording()" disabled>Stop</button>
@@ -132,6 +132,7 @@
 
     // Motion state
     let velocity = { x: 0, y: 0, z: 0 };
+    let velM = 0;
     let displacement = { x: 0, y: 0, z: 0 };
     let lastTimestamp = null;
 
@@ -163,19 +164,23 @@
         if (lastTimestamp !== null) {
           const dt = (now - lastTimestamp) / 1000; // convert ms to seconds
 
-          velocity.x += data.x * dt;
-          velocity.y += data.y * dt;
-          velocity.z += data.z * dt;
+          // velocity.x += data.x * dt;
+          // velocity.y += data.y * dt;
+          // velocity.z += data.z * dt;
 
-          displacement.x += velocity.x * dt;
-          displacement.y += velocity.y * dt;
-          displacement.z += velocity.z * dt;
+          // displacement.x += velocity.x * dt;
+          // displacement.y += velocity.y * dt;
+          // displacement.z += velocity.z * dt;
 
-          const totalDisp = Math.sqrt(
-            displacement.x ** 2 +
-            displacement.y ** 2 +
-            displacement.z ** 2
-          );
+          // const totalDisp = Math.sqrt(
+          //   displacement.x ** 2 +
+          //   displacement.y ** 2 +
+          //   displacement.z ** 2
+          // );
+
+          velM = mag * dt;
+          totalDisp = velM * dt;
+          
 
           document.getElementById('disp').textContent = totalDisp.toFixed(2);
         }
