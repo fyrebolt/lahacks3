@@ -36,6 +36,7 @@
   <div class="value">X: <span id="accX">-</span></div>
   <div class="value">Y: <span id="accY">-</span></div>
   <div class="value">Z: <span id="accZ">-</span></div>
+  <div class="value"><strong>Absolute: </strong> <span id="absAcc">-</span></div>
 
   <div id="status">Waiting for motion data...</div>
 
@@ -54,12 +55,18 @@
                     acc.y = event.acceleration?.y ?? 0;
                     acc.z = event.acceleration?.z ?? 0;
                   }, false);
+
+                  window.alert(acc.x)
+                  window.alert(acc.y)
+                  window.alert(acc.z)
             
                   // Update display every 500ms
                   setInterval(() => {
+                    const abs = Math.sqrt(acc.x ** 2 + acc.y ** 2 + acc.z ** 2);
                     document.getElementById("accX").textContent = acc.x.toFixed(2);
                     document.getElementById("accY").textContent = acc.y.toFixed(2);
                     document.getElementById("accZ").textContent = acc.z.toFixed(2);
+                    document.getElementById("absAcc").textContent = abs.toFixed(2);
                   }, 500);
                 } else {
                   document.getElementById("status").textContent = "DeviceMotionEvent NOT supported ❌";
