@@ -23,22 +23,58 @@
 
     peer.on('open', () => {
       conn = peer.connect(peerId);
-      conn.on('open', () => {
-        document.getElementById('status').textContent = 'Connected ✅ Sending data...';
-        DeviceMotionEvent.requestPermission()
-        window.addEventListener('devicemotion', event => {                  
+      conn.on('open', async () => {
+        document.getElementById('status').textContent = 'Connected ✅ Requesting motion permission...';
+    
+        // iOS 13+ requires explicit user permission for motion
+        if (typeof DeviceMotionEvent.requestPermission === 'function') {
+          try {
+            const response = await DeviceMotionEvent.requestPermission();
+            if (response !== 'granted') {
+              document.getElementById('status').textContent = '❌ Motion permission denied';
+              return;
+            }
+          } catch (err) {
+            document.getElementById('status').textContent = '❌ Error requesting permission';
+            console.error(err);
+            return;
+          }
+        }
+    
+        document.getElementById('status').textContent = 'Permission granted ✅ Sending data...';
+    
+        window.addEventListener('devicemotion', event => {
           const acc = event.acceleration || {};
           const data = {
             x: acc.x ?? 0,
             y: acc.y ?? 0,
             z: acc.z ?? 0
-          }
+          };
           if (conn.open) {
             conn.send(data);
           }
-        });
+        }, false);
       });
     });
+    
+    // peer.on('open', () => {
+    //   conn = peer.connect(peerId);
+    //   conn.on('open', () => {
+    //     document.getElementById('status').textContent = 'Connected ✅ Sending data...';
+    //     DeviceMotionEvent.requestPermission()
+    //     window.addEventListener('devicemotion', event => {                  
+    //       const acc = event.acceleration || {};
+    //       const data = {
+    //         x: acc.x ?? 0,
+    //         y: acc.y ?? 0,
+    //         z: acc.z ?? 0
+    //       }
+    //       if (conn.open) {
+    //         conn.send(data);
+    //       }
+    //     });
+    //   });
+    // });
   </script>
 
 </body>
