@@ -13,8 +13,29 @@
 
   <h1>📱 Streaming Accelerometer Data code a29c</h1>
   <p id="status">Connecting...</p>
+  <button id="startBtn">Enable Motion Access</button>
 
   <script>
+    const startBtn = document.getElementById('startBtn');
+    startBtn.addEventListener('click', async () => {
+    // For iOS: Request permission
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      try {
+        const response = await DeviceMotionEvent.requestPermission();
+        if (response !== 'granted') {
+          statusText.textContent = 'Permission denied ❌';
+          return;
+        }
+      } catch (err) {
+        statusText.textContent = 'Error requesting permission ❌';
+        console.error(err);
+        return;
+      }
+    }
+      
+    statusText.textContent = 'Permission granted ✅ Listening for motion...';
+    startBtn.style.display = 'none';
+    
     const urlParams = new URLSearchParams(window.location.search);
     const peerId = urlParams.get('id');
     const peer = new Peer();
