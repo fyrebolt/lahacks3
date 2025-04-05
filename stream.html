@@ -22,8 +22,8 @@
 
     peer.on('open', () => {
       conn = peer.connect(peerId);
-      DeviceMotionEvent.requestPermission().then(response => {
-        if (response == 'granted') {
+      // DeviceMotionEvent.requestPermission().then(response => {
+      //   if (response == 'granted') {
           conn.on('open', () => {
             document.getElementById('status').textContent = 'Connected ✅ Sending data...';
     
@@ -39,8 +39,8 @@
               }
             });
           });
-        }
-      });
+      //   }
+      // });
     });
   </script>
 
