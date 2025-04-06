@@ -314,7 +314,7 @@ function gotPoses(results) {
                 }
                 else if (myWorkouts[0]=="Plank" || myWorkouts[0]=="Wall Sit"){
                     static=true;
-                    timer = 15;
+                    time = 15;
                 } else{
                     static = false;
                     repsLeft = 1 + (2*reps);
@@ -345,7 +345,7 @@ function gotPoses(results) {
                     }
                     else if (myWorkouts[0]=="Plank" || myWorkouts[0]=="Wall Sit"){
                         static=true;
-                        timer = 15;
+                        time = 15;
                     } else{
                         console.log('iabuefwebwfjw')
                         console.log(myWorkouts)
