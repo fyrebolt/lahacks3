@@ -9,6 +9,10 @@ let movementDir = 0
 let static = false;
 let time = 15;
 let wrongPos = false;
+let report = [];
+let reportValues = [];
+let timeStart = 0;
+let timeEnd = 0;
 
 const currentStretch = document.getElementById("currentStretch")
 const nextStretch = document.getElementById("nextStretch")
@@ -21,6 +25,7 @@ const gradeText = document.getElementById("gradeText")
 reps = 2
 // myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
 myWorkouts = ["Push Up", "Wall Sit"]
+report = myWorkouts
 if (myWorkouts[0] == "Plank" || myWorkouts[0] == "Wall Sit"){
     static = true;
 }
@@ -312,6 +317,7 @@ function gotPoses(results) {
                 
                 // console.log(totalDist)
                   gradeText.innerHTML = `Grade: ${staticGrade()}`;
+              
                 startFullscreenCountdown()
                 displacement = {x:0, y:0, z:0}
                 if (myWorkouts.length==0){
@@ -344,11 +350,16 @@ function gotPoses(results) {
                 if (repsLeft <= 0){
                     console.log("reps")
                     myWorkouts.shift(1)
+                    timeEnd = Date.now()
+                    reportValues.append(((timeEnd - timeStart)/1000/reps).toFixed(2) + " seconds per rep");
+                
                     startFullscreenCountdown()
+                    
                     displacement = {x:0, y:0, z:0}
                     console.log(myWorkouts)
                     if (myWorkouts.length==0){
-                        window.location.href = "index.html";
+                        // window.location.href = "index.html";
+                      resultsScreen();
                     }
                     else if (myWorkouts[0]=="Plank" || myWorkouts[0]=="Wall Sit"){
                         console.log("rv is mid");
@@ -446,6 +457,7 @@ function staticGrade() {
   else grade = 'Needs Improvement';
   displacement = { x: 0, y: 0, z: 0 };
 
+  reportValues.append(grade);
   return grade
 }
 
@@ -467,8 +479,20 @@ function startFullscreenCountdown() {
       console.log("Countdown done ✅");
       time = 15;
       displacement = {x:0, y:0, z:0};
+      timeStart = Date.now();
     }
   }, 1000);
+}
+
+function resultsScreen() {
+  const screen = document.getElementById('fullscreen-countdown');
+  let text = "";
+
+  for (let i = 0; i < report.length; i++) {
+    text += report[i] + ": " + reportValues[i] + "\n";
+  }
+  
+  screen.textContent = text;
 }
 
 function beep() {
