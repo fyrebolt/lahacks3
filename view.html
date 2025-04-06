@@ -202,6 +202,9 @@
         if (seconds > 0) {
           timerDisplay.textContent = `Starting in ${seconds}`
         }
+        else {
+          clearInterval(countdown);
+        }
       }, 1000);
       
       let timeLeft = x;
@@ -224,6 +227,7 @@
     }  
 
     function exercise(name) {
+      let grade = 'No grade detected';
       const totalDisp = Math.sqrt(
         displacement.x ** 2 +
         displacement.y ** 2 +
@@ -236,6 +240,8 @@
           else if (totalDisp < 1.0) grade = 'C';
           else grade = 'Needs Improvement';
       }
+
+      return grade
     }
 
     function startWorkout() {
