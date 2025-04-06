@@ -93,12 +93,6 @@ function getDist(pose, ideals) {
             diff += (angles[i] - ideals[i])**2
         }
     }
-    fp24.innerHTML= "angle to vertical: " + angles[0] +
-                    "  leg bend: " + angles[1] + 
-                    "  right knee: " + angles[2] + 
-                    "  left knee: " + angles[3] + 
-                    "arms: " + angles[4]
-    fp25.innerHTML= "" + diff
     return diff
 }
 
