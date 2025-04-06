@@ -246,6 +246,7 @@ let lastTimestamp = null;
                         timeEnd = Date.now()
                         reportValues.push(((timeEnd - timeStart)/1000/reps).toFixed(2) + " seconds per rep")
                         repCount = 0;
+                        displacement = {x: 0, y:0, z:0}
                         startFullscreenCountdown();
                     }
                 }
