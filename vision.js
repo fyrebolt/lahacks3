@@ -320,6 +320,7 @@ function gotPoses(results) {
                 
                 // console.log(totalDist)
                   // gradeText.innerHTML = `Grade: ${staticGrade()}`;
+                staticGrade()
               
                 startFullscreenCountdown()
                 displacement = {x:0, y:0, z:0}
