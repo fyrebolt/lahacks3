@@ -16,14 +16,14 @@ let timeEnd = 0;
 
 const currentStretch = document.getElementById("currentStretch")
 const nextStretch = document.getElementById("nextStretch")
-// const fp24 = document.getElementById("fp24")
-// const fp25 = document.getElementById("fp25")
-// const gradeText = document.getElementById("gradeText")
-
+const timer = document.getElementById("timer")
+const repLeft = document.getElementById("repsLeft")
+timer.innerHTML = ""
+reps = 8
 myWorkouts = sessionStorage.getItem("workout").split(",")
 
 //reps = sessionStorage.getItem("reps")
-reps = 2
+
 // myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
 //myWorkouts = ["Push Up", "Wall Sit"]
 let report = myWorkouts.slice();
@@ -307,9 +307,8 @@ function gotPoses(results) {
             nextStretch.innerHTML = "Nothing Left!"
         }
         if (static){
-            console.log(currentIdeals)
-            console.log(myWorkouts)
             currentIdeals = workoutIdealsUp[myWorkouts[0]]
+            timer.innerHTML = time.toFixed(1) + " seconds left" 
             console.log(currentIdeals)
             if(getDist(pose, currentIdeals) < 800){
                 wrongPos = false;
@@ -324,10 +323,7 @@ function gotPoses(results) {
                 console.log(myWorkouts)
                 myWorkouts.shift(1)
                 console.log(myWorkouts)
-                // console.log("changing displacement to zero by time < 0.17")
                 
-                // console.log(totalDist)
-                  // gradeText.innerHTML = `Grade: ${staticGrade()}`;
                 staticGrade()
               
                 startFullscreenCountdown()
@@ -344,16 +340,10 @@ function gotPoses(results) {
                     repsLeft = 1 + (2*reps);
                 }
             }
-            currentStretch.innerHTML = "Time Remaining: " + Math.round(time)
 
         } else{
             wrongPos = false;
-            currentStretch.innerHTML = "reps left: " + Math.floor(repsLeft/2) + "  exercise: " + myWorkouts[0]
-            if (movementDir==0){
-                nextStretch.innerHTML = "going up"
-            } else{
-                nextStretch.innerHTML = "going down"
-            }
+            timer.innerHTML = "" 
             
             if(getDist(pose, currentIdeals) < 800){
                 repsLeft -= 1;
