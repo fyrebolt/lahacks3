@@ -46,9 +46,7 @@ workoutIdealsDown = {
 //----//
 
 function preload() {
-    currentIdeals = workoutIdealsUp[myWorkouts[0]]
   bodyPose = ml5.bodyPose("MoveNet", { flipped: true });
-    startFullscreenCountdown()
 }
 
 function getDist(pose, ideals) {
@@ -219,6 +217,8 @@ function setup() {
   video = createCapture(VIDEO, { flipped: true });
   video.hide();
   bodyPose.detectStart(video, gotPoses);
+  currentIdeals = workoutIdealsUp[myWorkouts[0]]
+  startFullscreenCountdown()
 }
 
 function draw() {
