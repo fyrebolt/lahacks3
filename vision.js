@@ -72,10 +72,6 @@ peer.on('connection', connection => {
       if (Math.abs(z) < 0.12) {
         z = 0;
       }
-
-      if (squating || pushing) {
-        detectLow();
-      }
       
       const mag = Math.sqrt(x ** 2 + y ** 2 + z ** 2).toFixed(2);
       
