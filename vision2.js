@@ -17,6 +17,8 @@ let timeEnd = 0;
 const currentStretch = document.getElementById("currentStretch")
 const nextStretch = document.getElementById("nextStretch")
 const timer = document.getElementById("timer")
+const repsLeft = document.getElementById("repsLeft")
+timer.innerHTML = ""
 reps = 8
 myWorkouts = ["Push Up", "Wall Sit"]
 let report = myWorkouts.slice();
@@ -130,6 +132,7 @@ function gotPoses(results) {
     checkDots(pose);
     if (allGood){
         currentStretch.innerHTML = myWorkouts[0]
+        repsLeft.innerHTML = "reps left: " + Math.floor(repsLeft/2)
         if (myWorkouts.length>1){
             nextStretch.innerHTML = myWorkouts[1]
         } else{
@@ -164,14 +167,8 @@ function gotPoses(results) {
             currentStretch.innerHTML = "Time Remaining: " + Math.round(time)
 
         } else{
-            wrongPos = false;
-            currentStretch.innerHTML = "reps left: " + Math.floor(repsLeft/2) + "  exercise: " + myWorkouts[0]
-            if (movementDir==0){
-                nextStretch.innerHTML = "going up"
-            } else{
-                nextStretch.innerHTML = "going down"
-            }
-            
+            timer.innerHTML = "" 
+            wrongPos = false;    
             if(getDist(pose, currentIdeals) < 800){
                 repsLeft -= 1;
                 beep()
