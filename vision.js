@@ -20,11 +20,12 @@ const nextStretch = document.getElementById("nextStretch")
 // const fp25 = document.getElementById("fp25")
 // const gradeText = document.getElementById("gradeText")
 
-//myWorkouts = sessionStorage.getItem("workout").split(",")
+myWorkouts = sessionStorage.getItem("workout").split(",")
+
 //reps = sessionStorage.getItem("reps")
 reps = 2
 // myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
-myWorkouts = ["Push Up", "Wall Sit"]
+//myWorkouts = ["Push Up", "Wall Sit"]
 let report = myWorkouts.slice();
 
 console.log(report)
