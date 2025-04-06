@@ -25,6 +25,7 @@ const nextStretch = document.getElementById("nextStretch")
 reps = 2
 // myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
 myWorkouts = ["Push Up", "Wall Sit"]
+let workoutIndex = 0;
 let report = myWorkouts.slice();
 
 console.log(report)
@@ -53,6 +54,7 @@ workoutIdealsDown = {
 
 let velocity = { x: 0, y: 0, z: 0 };
 let velM = 0;
+let repCount = 0;
 let displacement = { x: 0, y: 0, z: 0 };
 let lastTimestamp = null;
 
@@ -230,6 +232,24 @@ let lastTimestamp = null;
             // document.getElementById('vel').textContent = totalVel.toFixed(2);
             document.getElementById('disp').textContent = totalDisp.toFixed(2);
             // document.getElementById('other').textContent = otherDisp.toFixed(2);
+
+            if (myWorkouts[workoutIndex] == 'Wall Sit' || myWorkouts[workoutIndex] == 'Plank') {
+                staticTimer();
+            }
+            else {
+
+                if (totalDisp > 0.5) {
+                    repCount++;
+                    beep();
+                    if (repCount >= 16) {
+                        workoutIndex++;
+                        timeEnd = Date.now()
+                        reportValues.push(((timeEnd - timeStart)/1000/reps).toFixed(2) + " seconds per rep")
+                        repCount = 0;
+                        startFullscreenCountdown();
+                    }
+                }
+            }
         }
     
         lastTimestamp = now;
@@ -618,6 +638,7 @@ function staticGrade() {
   displacement = { x: 0, y: 0, z: 0 };
 
   reportValues.push(grade);
+    workoutIndex++;
   return grade
 }
 
@@ -641,7 +662,35 @@ function startFullscreenCountdown() {
       displacement = {x:0, y:0, z:0};
       timeStart = Date.now();
 
-      if (myWorkouts.length == 0) {
+      if (myWorkouts.length == workoutIndex) {
+          resultsScreen()
+      }
+    }
+  }, 1000);
+}
+
+function staticTimer() {
+  const screen = document.getElementById('fullscreen-countdown');
+  let count = 15;
+  screen.textContent = count;
+  screen.style.display = 'flex';
+
+  const countdown = setInterval(() => {
+    count--;
+    if (count >= 0) {
+        // beep()
+      screen.textContent = count;
+    } else {
+      clearInterval(countdown);
+      screen.style.display = 'none';
+      console.log("Countdown done ✅");
+      time = 15;
+      displacement = {x:0, y:0, z:0};
+      timeStart = Date.now();
+      beep();
+      staticGrade()
+
+      if (myWorkouts.length == workoutIndex) {
           resultsScreen()
       }
     }
