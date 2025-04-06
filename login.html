@@ -61,7 +61,7 @@
                     const userRef = ref(database, 'users/' + user.uid);
                     get(userRef).then((snapshot) => {
                         if (snapshot.exists()) {
-                            sessionStorage.setItem("user", username)
+                            //sessionStorage.setItem("user", username)
                             window.location.href = "home.html"; // Redirect on success
                         } else {
                             document.getElementById("error-message").innerText = "User not found in database.";
