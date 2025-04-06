@@ -1,0 +1,144 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+    background-color: #202216;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar nav ul {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar nav ul li {
+    margin-left: 20px;
+}
+#pc{
+    margin: 5px
+}
+#pcText{
+    font-size:30px;
+    text-align:center;
+    margin:15px;
+    padding:50px 50px;
+    background-color:#F2DE9B;
+    border-radius: 10px
+}
+#p{
+    margin: 5px
+}
+.navbar nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+}
+
+/* Hero Section */
+.hero {
+    background-image: url('https://k1fitness.co.uk/wp-content/uploads/2020/04/bw-1024x683.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero1 {
+    background-image: url('');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    background-color: #f5d672;
+    color: #fdfdfd;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.cta-button:hover {
+    background-color: #f5d672;
+}
+
+/* Features Section */
+.features {
+    background-color: #fff;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.feature-item {
+    margin-bottom: 40px;
+}
+
+.feature-item h3 {
+    font-size: 24px;
+    color: #F2DE9B;
+    margin-bottom: 10px;
+}
+
+.feature-item p {
+    font-size: 18px;
+    color: #202216;
+}
+
+
+
+
+
+
+/* Footer Section */
+footer {
+    background-color: #202216;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
