@@ -484,6 +484,10 @@ function startFullscreenCountdown() {
       time = 15;
       displacement = {x:0, y:0, z:0};
       timeStart = Date.now();
+
+      if (myWorkouts.length == 0) {
+          resultsScreen()
+      }
     }
   }, 1000);
 }
