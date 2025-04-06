@@ -1,0 +1,171 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    height:100%
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #202216;
+    line-height: 1.6;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    height:100%;
+    justify-content:space-between;
+}
+
+
+video {
+    filter: brightness(60%);
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+header {
+    background-color: #202216;
+    color: #fff;
+    padding: 10px 0;
+    width:100%
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+    padding: 0 20px;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Main Content Styling */
+.main-content {
+    width:80%;
+    padding: 40px;
+}
+.main-content2 {
+    
+    padding: 100px;
+}
+.hero {
+    background-color: #ceb76d;
+    
+    color: #fff;
+    padding: 30px 10px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.hero h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 14px;
+}
+
+.exercise-selection {
+    margin-top: 30px;
+    
+    padding: 20px 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-selection h2 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.exercise-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.exercise-cardn {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.exercise-card input {
+    display: none;
+}
+.exercise-cardn input {
+    display: none;
+}
+.exercise-cardn label {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.exercise-card label {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.exercise-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.exercise-card input:checked + label {
+    color: #f5d672;
+}
+
+.action-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.cta-button {
+    background-color: #f5d672;
+    color: #fff;
+    padding: 12px 40px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+}
+
+.cta-button:hover {
+    background-color: #bea759;
+}
+
+footer {
+    background-color: #202216;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    width:100%;
+}
