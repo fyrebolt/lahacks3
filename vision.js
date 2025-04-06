@@ -345,7 +345,8 @@ function gotPoses(results) {
                         window.location.href = "index.html";
                     }
                     else if (myWorkouts[0]=="Plank" || myWorkouts[0]=="Wall Sit"){
-                        static=true;
+                        console.log("rv is mid");
+                        static=true
                         time = 15;
                     } else{
                         console.log('iabuefwebwfjw')
