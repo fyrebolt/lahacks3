@@ -650,6 +650,7 @@ function staticGrade() {
 
 
 function startFullscreenCountdown() {
+  inTimer = true;
   const screen = document.getElementById('fullscreen-countdown');
   let count = 5;
   screen.textContent = count;
@@ -667,6 +668,8 @@ function startFullscreenCountdown() {
       time = 15;
       displacement = {x:0, y:0, z:0};
       timeStart = Date.now();
+
+        inTimer = false;
 
       if (myWorkouts.length == workoutIndex) {
           resultsScreen()
