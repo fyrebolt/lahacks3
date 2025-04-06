@@ -38,6 +38,150 @@ workoutIdealsDown = {
     "Squat": [25, 85, 50, 50, 23.5],
     "Lunges": [15, 140, 110, 110, 23.5],
 }
+//----//
+const peer = new Peer();
+let conn;
+peer.on('open', id => {
+    document.getElementById('peer-id').textContent = `Your Peer ID: ${id}`;
+    const url = `https://fyrebolt.github.io/lahacks3/stream.html?id=${id}`;
+    QRCode.toCanvas(document.getElementById('qr-code'), url);
+});
+
+peer.on('connection', connection => {
+    conn = connection;
+    document.querySelector('canvas').style.display = 'none';
+    document.getElementById('peer-id').textContent = 'Phone Connected ✅';
+    //document.getElementById('startWorkout').disabled = false;
+    
+    conn.on('data', data => {
+      
+      const now = Date.now();
+
+      let x = data.x.toFixed(2);
+      let y = data.y.toFixed(2);
+      let z = data.z.toFixed(2);
+
+      if (Math.abs(x) < 0.12) {
+        x = 0;
+      }
+
+      if (Math.abs(y) < 0.12) {
+        y = 0;
+      }
+
+      if (Math.abs(z) < 0.12) {
+        z = 0;
+      }
+
+      if (squating || pushing) {
+        detectLow();
+      }
+      
+      const mag = Math.sqrt(x ** 2 + y ** 2 + z ** 2).toFixed(2);
+      
+      document.getElementById('x').textContent = x;
+      document.getElementById('y').textContent = y;
+      document.getElementById('z').textContent = z;
+      document.getElementById('mag').textContent = mag;
+      
+      // Integrate acceleration to velocity and displacement
+      if (lastTimestamp !== null) {
+        const dt = (now - lastTimestamp) / 1000; // convert ms to seconds
+
+        // if (Math.abs(data.x) < 0.15 && Math.abs(data.y) < 0.1 && Math.abs(data.z) < 0.1) {
+        //   velocity = { x: 0, y: 0, z: 0 };
+        // }
+
+        // bottom limit
+        if (Math.abs(x) < 0.12) {
+          velocity.x = 0;
+        }
+
+        if (Math.abs(y) < 0.12) {
+          velocity.y = 0;
+        }
+
+        if (Math.abs(z) < 0.12) {
+          velocity.z = 0;
+        }
+
+        // upper limit
+        if (Math.abs(x) > 10) {
+          if (x > 0) {
+            velocity.x = 2 + 2 * Math.pow(Math.abs(x), 0.6);
+          }
+          else {
+            velocity.x = (2 + 2 * Math.pow(Math.abs(x), 0.6)) * -1;
+          }
+        }
+
+        if (Math.abs(y) > 10) {
+          if (y > 0) {
+            velocity.y = 2 + 2 * Math.pow(Math.abs(y), 0.6);
+          }
+          else {
+            velocity.y = (2 + 2 * Math.pow(Math.abs(y), 0.6)) * -1;
+          }
+        }
+
+        if (Math.abs(z) > 10) {
+          if (z > 0) {
+            velocity.z = 2 + 2 * Math.pow(Math.abs(z), 0.6);
+          }
+          else {
+            velocity.z = (2 + 2 * Math.pow(Math.abs(z), 0.6)) * -1;
+          }
+        }
+
+        if (x > 1) {
+          x ** 0.5;
+        }
+        if (y > 1) {
+          y ** 0.5;
+        }
+        if (z > 1) {
+          z ** 0.5;
+        }
+        
+        velocity.x += x * dt;
+        velocity.y += y * dt;
+        velocity.z += z * dt;
+
+        displacement.x += velocity.x * dt;
+        displacement.y += velocity.y * dt;
+        displacement.z += velocity.z * dt;
+
+        const totalVel = Math.sqrt(
+        velocity.x ** 2 +
+        velocity.y ** 2 +
+        velocity.z ** 2
+        );
+        
+        const totalDisp = Math.sqrt(
+        displacement.x ** 2 +
+        displacement.y ** 2 +
+        displacement.z ** 2
+        );
+
+        otherDisp += ((mag) * (dt ** 2) / 2 + totalVel * dt) * 0.8;
+
+        document.getElementById('vel').textContent = totalVel.toFixed(2);
+        document.getElementById('disp').textContent = totalDisp.toFixed(2);
+        document.getElementById('other').textContent = otherDisp.toFixed(2);
+    }
+
+    lastTimestamp = now;
+
+    // if (recording) {
+    //   recordedData.push({
+    //     x: +x, y: +y, z: +z, mag: +mag,
+    //     time: now
+    //   });
+    // }
+    });
+});
+
+
 
 function preload() {
     currentIdeals = workoutIdealsUp[myWorkouts[0]]
