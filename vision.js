@@ -22,6 +22,7 @@ const repLeft = document.getElementById("repsLeft")
 timer.innerHTML = ""
 reps = 8
 myWorkouts = sessionStorage.getItem("workout").split(",")
+myWorkouts.pop()
 
 //reps = sessionStorage.getItem("reps")
 
