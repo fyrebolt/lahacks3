@@ -74,18 +74,30 @@
         <source src="backgroundvideo1.mp4" type="video/mp4" />
       </video>
     <script>
+        workout = [false, false, false, false, false, false]
+        stuff=["Lunges","Squat","Plank","Sit Up","Push Up","Wall Sit"]
         for (let i = 1; i <= 6; i++) {
             document.getElementById('exercise' + i).addEventListener('change', function(event) {
             if (event.target.checked) {
                 // Code to execute when the checkbox is checked
-                sessionStorage.setItem(i, "true")
-                console.log(sessionStorage.getItem(i))
+                workout[i-1]=true
+                
             } else {
                 // Code to execute when the checkbox is unchecked
-                sessionStorage.setItem(i, "false")
-                console.log(sessionStorage.getItem(i))
+                workout[i-1]=false
             }
         });
+    }
+    function submitExercises(){
+        workout1 = ""
+        for (let i = 0; i < 6; i++) {
+            if(workout[i]){
+                workout1+= `${stuff[i]},`
+            }
+        }
+        sessionStorage.setItem("workout",workout1)
+        window.location.href = "phoneVision.html"
+        
     }
     </script>
 </body>
