@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Computer Viewer</title>
@@ -27,10 +27,12 @@
   <div class="value">Velocity: <span id="vel">0.00</span> m/s</div>
   <div class="value"> first Displacement: <span id="disp">0.00</span> m</div>
   <div class="value"> Other Displacement: <span id="other">0.00</span> m</div>
-  <h2 id="grade" style="margin-top: 2rem;"></h2>
+  <h2 id="timer" style="margin-top: 2rem;"></h2>
 
+  
+<!-- 
   <button id="startBtn" onclick="startCountdown()" disabled>Start Recording</button>
-  <button id="stopBtn" onclick="stopRecording()" disabled>Stop</button>
+  <button id="stopBtn" onclick="stopRecording()" disabled>Stop</button> -->
 
   <h2 id="countdown"></h2>
 
@@ -61,6 +63,8 @@
       document.getElementById('startBtn').disabled = false;
 
       conn.on('data', data => {
+        startTimer()
+        
         const now = Date.now();
 
         let x = data.x.toFixed(2);
@@ -184,54 +188,86 @@
       });
     });
 
-    function startCountdown() {
-      document.getElementById('startBtn').disabled = true;
-      let count = 3;
-      document.getElementById('countdown').textContent = `Starting in ${count}...`;
+    function startTimer(x){
+      let timeLeft = x;
+      const timerDisplay = document.getElementById('timer');
+      timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+  
       const interval = setInterval(() => {
-        count--;
-        if (count > 0) {
-          document.getElementById('countdown').textContent = `Starting in ${count}...`;
+        timeLeft--;
+        if (timeLeft > 0) {
+          timerDisplay.textContent = `Time Left: ${timeLeft}s`;
         } else {
           clearInterval(interval);
-          recording = true;
-          document.getElementById('countdown').textContent = 'Recording...';
-          document.getElementById('stopBtn').disabled = false;
+
+          const totalDisp = Math.sqrt(
+            displacement.x ** 2 +
+            displacement.y ** 2 +
+            displacement.z ** 2
+          );
+        
+          let grade;
+          if (totalDisp < 0.2) grade = 'A+';
+          else if (totalDisp < 0.4) grade = 'A';
+          else if (totalDisp < 0.6) grade = 'B';
+          else if (totalDisp < 1.0) grade = 'C';
+          else grade = 'Needs Improvement';
+          
+          timerDisplay.textContent =  `Your grade is ${grade}`;
+          stopRecording(); // <-- Make sure this exists in your code
         }
       }, 1000);
-    }
-
-    function stopRecording() {
-      recording = false;
-      document.getElementById('countdown').textContent = 'Recording stopped.';
-      document.getElementById('stopBtn').disabled = true;
+    }  
 
 
-      // Calculate final total displacement
-      const totalDisp = Math.sqrt(
-        displacement.x ** 2 +
-        displacement.y ** 2 +
-        displacement.z ** 2
-      );
+    // function startCountdown() {
+    //   document.getElementById('startBtn').disabled = true;
+    //   let count = 3;
+    //   document.getElementById('countdown').textContent = `Starting in ${count}...`;
+    //   const interval = setInterval(() => {
+    //     count--;
+    //     if (count > 0) {
+    //       document.getElementById('countdown').textContent = `Starting in ${count}...`;
+    //     } else {
+    //       clearInterval(interval);
+    //       recording = true;
+    //       document.getElementById('countdown').textContent = 'Recording...';
+    //       document.getElementById('stopBtn').disabled = false;
+    //     }
+    //   }, 1000);
+    // }
+
+  //   function stopRecording() {
+  //     recording = false;
+  //     document.getElementById('countdown').textContent = 'Recording stopped.';
+  //     document.getElementById('stopBtn').disabled = true;
+
+
+  //     // Calculate final total displacement
+  //     const totalDisp = Math.sqrt(
+  //       displacement.x ** 2 +
+  //       displacement.y ** 2 +
+  //       displacement.z ** 2
+  //     );
     
-      let grade;
-      if (totalDisp < 0.2) grade = 'A+';
-      else if (totalDisp < 0.4) grade = 'A';
-      else if (totalDisp < 0.6) grade = 'B';
-      else if (totalDisp < 1.0) grade = 'C';
-      else grade = 'Needs Improvement';
+  //     let grade;
+  //     if (totalDisp < 0.2) grade = 'A+';
+  //     else if (totalDisp < 0.4) grade = 'A';
+  //     else if (totalDisp < 0.6) grade = 'B';
+  //     else if (totalDisp < 1.0) grade = 'C';
+  //     else grade = 'Needs Improvement';
     
-      document.getElementById('grade').textContent = `🧘‍♂️ Plank Accuracy: ${grade} (Displacement: ${totalDisp.toFixed(2)} m)`;
+  //     document.getElementById('grade').textContent = `🧘‍♂️ Plank Accuracy: ${grade} (Displacement: ${totalDisp.toFixed(2)} m)`;
       
-      console.log('Recorded data:', recordedData);
-    }
+  //     console.log('Recorded data:', recordedData);
+  //   }
   </script>
 
 </body>
 </html>
- -->
 
- <!DOCTYPE html>
+
+<!--  <!DOCTYPE html>
 <html>
 <head>
   <title>Plank Accuracy Tracker</title>
@@ -381,4 +417,4 @@
   </script>
 
 </body>
-</html>
+</html> -->
