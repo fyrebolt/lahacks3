@@ -344,6 +344,7 @@ function gotPoses(results) {
                 if (repsLeft <= 0){
                     console.log("reps")
                     myWorkouts.shift(1)
+                    startFullscreenCountdown()
                     displacement = {x:0, y:0, z:0}
                     console.log(myWorkouts)
                     if (myWorkouts.length==0){
