@@ -25,3 +25,10 @@ function myFunction(x) {
   x.addEventListener("change", function() {
     myFunction(x);
   });
+document.getElementById("cp").onclick = () => {
+    sessionStorage.setItem("cp",true)
+}
+document.getElementById("c").onclick = () => {
+    sessionStorage.setItem("cp",false)
+    
+}
