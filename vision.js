@@ -9,6 +9,7 @@ let movementDir = 0
 let static = false;
 let time = 15;
 let wrongPos = false;
+let loggedIn = false;
 
 let reportValues = [];
 let timeStart = 0;
@@ -74,6 +75,7 @@ peer.on('open', id => {
 });
 
 peer.on('connection', connection => {
+    loggedIn = true;
     conn = connection;
     document.querySelectorAll('canvas')[1].style.display = 'none';
     document.getElementById('peer-id').textContent = 'Connection Secure ✅';
@@ -294,7 +296,7 @@ function gotPoses(results) {
   poses = results;
   
   //code starts here
-  if (poses.length > 0 && myWorkouts.length > 0){
+  if (poses.length > 0 && myWorkouts.length > 0 && loggedIn){
     let pose = poses[0];
     checkDots(pose);
     if (allGood){
@@ -405,7 +407,7 @@ function draw() {
     fill(0, 255, 0);
     rect(0, 440, 640-(43*time), 40)
   }
-  if (poses.length > 0 & allGood) {
+  if (poses.length > 0 && allGood && loggedIn) {
     let pose = poses[0];
     if(wrongPos){
         fill(255,0,0);
@@ -439,7 +441,11 @@ function draw() {
     textFont('Verdana');
     filter(BLUR, 8);
     textAlign(CENTER);
-    text('Please Remain \nFully in Frame', 340, 240);
+    if (loggedIn){
+        text('Please Remain \nFully in Frame', 340, 240);
+    } else{
+        text('Please Join by \nUsing the QR Code', 340, 240);
+    }
   }
   
 }
