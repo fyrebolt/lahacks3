@@ -662,7 +662,7 @@ function startFullscreenCountdown() {
         count--;
         if (count >= 0) {
             beep()
-          screen.textContent = "Next exercise in:<br>" + count;
+          screen.textContent = "Next exercise in:" + count;
         } else {
           clearInterval(countdown);
           screen.style.display = 'none';
