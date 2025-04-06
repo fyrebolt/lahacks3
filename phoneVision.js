@@ -25,7 +25,8 @@ const nextStretch = document.getElementById("nextStretch")
 //reps = sessionStorage.getItem("reps")
 reps = 2
 // myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
-myWorkouts = ["Push Up", "Wall Sit"]
+myWorkouts = sessionStorage.getItem("workout").split(",")
+
 let workoutIndex = 0;
 let report = myWorkouts.slice();
 
