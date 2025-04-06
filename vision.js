@@ -92,9 +92,9 @@ peer.on('connection', connection => {
       
       const mag = Math.sqrt(x ** 2 + y ** 2 + z ** 2).toFixed(2);
       
-      document.getElementById('x').textContent = x;
-      document.getElementById('y').textContent = y;
-      document.getElementById('z').textContent = z;
+      // document.getElementById('x').textContent = x;
+      // document.getElementById('y').textContent = y;
+      // document.getElementById('z').textContent = z;
       document.getElementById('mag').textContent = mag;
 
       // displacement = {x:x, y:y, z:z}
@@ -182,7 +182,7 @@ peer.on('connection', connection => {
 
         document.getElementById('vel').textContent = totalVel.toFixed(2);
         document.getElementById('disp').textContent = totalDisp.toFixed(2);
-        document.getElementById('other').textContent = otherDisp.toFixed(2);
+        // document.getElementById('other').textContent = otherDisp.toFixed(2);
     }
 
     lastTimestamp = now;
