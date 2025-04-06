@@ -5,18 +5,36 @@
     <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-
+     <link rel="stylesheet" type="text/css" href="style3.css">
     <meta charset="utf-8" />
   </head>
   <body>
-    <div id="workoutTopRight">
-      <p id="currentTitle">Current stretch:</p>
-      <p id = "currentStretch"></p>
-      <p id = "fp24"></p>
-      <hr class="hr2">
-      <p id="nextUp">Next up:</p>
-      <p id = "nextStretch"></p>
-      <p id = "fp25"></p>
+    <div id="workoutWrapper">
+        <div id="bgFilter2">
+            <div id="workoutTop">
+              <div id="frame">
+
+              </div>
+              <div id="workoutTopRight">
+                <p id="currentTitle">Current stretch:</p>
+                <p id = "currentStretch"></p>
+                <hr class="hr2">
+                <p id="nextUp">Next up:</p>
+                <p id = "nextStretch"></p>
+              </div>
+            </div>
+            <div id="workoutBottom">
+              <div id="workoutBottomLeft">
+                <p id="accuracyLabel">Accuracy: <span id ="accuracy"></span></p>
+                <p id="motivation">You got this!</p>
+              </div>
+              <p id = "timer">0</p>
+            </div>
+            <div id="workoutDone">
+              <p id="done1">Workout complete, well done!</p>
+              <p id="done2">Return to Home</p>
+            </div>
+        </div>     
     </div>
     <script src="vision2.js"></script>
   </body>
