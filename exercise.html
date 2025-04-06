@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Choose exercises to track your fitness performance.">
+    <title>Select Your Exercises - SquatSync</title>
+    <link rel="stylesheet" href="style2.css">
+    <script src="exercise.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <header>
+        <div class="navbar">
+            <div class="logo">SquatSync</div>
+            <div class="logo" ><a href="profile.html" style="color:rgb(255,255,255); text-decoration:none">Profile</a></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Select Your Exercises</h1>
+                <p>Choose from the following exercises to track your performance with SquatSync.</p>
+            </div>
+        </section>
+
+        <section id="exercises" class="exercise-selection">
+            <div class="container">
+                <h2>Pick Your Exercises</h2>
+                <div class="exercise-grid">
+                    <!-- Exercise options -->
+                    <div class="exercise-card" >
+                        <input type="checkbox"  id="exercise1" name="exercise1">
+                        <label for="exercise1">Lunges</label>
+                    </div>
+                    <div class="exercise-card">
+                        <input type="checkbox" id="exercise2" name="exercise2">
+                        <label for="exercise2">Squats</label>
+                    </div>
+                    <div class="exercise-card">
+                        <input type="checkbox" id="exercise3" name="exercise3">
+                        <label for="exercise3">Plank</label>
+                    </div>
+                    <div class="exercise-card" >
+                        <input type="checkbox" id="exercise4" name="exercise4">
+                        <label for="exercise4">Sit-ups</label>
+                    </div>
+                    <div class="exercise-card">
+                        <input type="checkbox" id="exercise5" name="exercise5">
+                        <label for="exercise5">Push-ups</label>
+                    </div>
+                    <div class="exercise-card">
+                        <input type="checkbox" id="exercise6" name="exercise6">
+                        <label for="exercise6">Wall sit</label>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="cta-button" onclick="submitExercises()">Start</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer id="contact">
+        <div class="footer-container">
+            <p>Los Altos Hacks IX</p>
+        </div>
+    </footer>
+    <video id='video' loop muted autoplay>
+        <source src="backgroundvideo1.mp4" type="video/mp4" />
+      </video>
+    <script>
+        workout = [false, false, false, false, false, false]
+        stuff=["Lunges","Squat","Plank","Sit Up","Push Up","Wall Sit"]
+        for (let i = 1; i <= 6; i++) {
+            document.getElementById('exercise' + i).addEventListener('change', function(event) {
+            if (event.target.checked) {
+                // Code to execute when the checkbox is checked
+                workout[i-1]=true
+                
+            } else {
+                // Code to execute when the checkbox is unchecked
+                workout[i-1]=false
+            }
+        });
+    }
+    function submitExercises(){
+        workout1 = ""
+        for (let i = 0; i < 6; i++) {
+            if(workout[i]){
+                workout1+= `${stuff[i]},`
+            }
+        }
+        sessionStorage.setItem("workout",workout1)
+        console.log(sessionStorage.getItem("workout"))
+    }
+    </script>
+</body>
+</html>
