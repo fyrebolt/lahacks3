@@ -213,11 +213,11 @@ let lastTimestamp = null;
             velocity.z ** 2
             );
             
-            const totalDisp = Math.sqrt(
-            displacement.x ** 2 +
-            displacement.y ** 2 +
-            displacement.z ** 2
-            );
+            // const totalDisp = Math.sqrt(
+            // displacement.x ** 2 +
+            // displacement.y ** 2 +
+            // displacement.z ** 2
+            // );
 
             const totalDisp = Math.sqrt(
                 displacement.x ** 2 +
