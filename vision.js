@@ -297,10 +297,11 @@ function gotPoses(results) {
             if (time < 0.17){
                 console.log("timer log")
                 myWorkouts.shift(1)
+                displacement = {x:0, y:0, z:0}
                 // console.log(totalDist)
                   gradeText.innerHTML = `Grade: ${staticGrade()}`;
                 if (myWorkouts.length==0){
-                    window.location.href = "index.html";
+                    // window.location.href = "index.html";
                 }
                 else if (myWorkouts[0]=="Plank" || myWorkouts[0]=="Wall Sit"){
                     static=true;
@@ -328,6 +329,7 @@ function gotPoses(results) {
                 if (repsLeft <= 0){
                     console.log("reps")
                     myWorkouts.shift(1)
+                    displacement = {x:0, y:0, z:0}
                     console.log(myWorkouts)
                     if (myWorkouts.length==0){
                         window.location.href = "index.html";
