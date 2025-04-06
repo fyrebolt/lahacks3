@@ -1,234 +1,39 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-     <title>GravTrack - Home</title>
-     <script type="module">
-         // Import Firebase modules
-         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
- 
-         // Firebase configuration (Replace with your actual Firebase config)
-         const firebaseConfig = {
-               apiKey: "AIzaSyCSTnMELsGO_6sII4Aw9vRsVgKHH0RD97E",
-               authDomain: "lahacks3.firebaseapp.com",
-               databaseURL: "https://lahacks3-default-rtdb.firebaseio.com",
-               projectId: "lahacks3",
-               storageBucket: "lahacks3.firebasestorage.app",
-               messagingSenderId: "363279399619",
-               appId: "1:363279399619:web:d8c8deaa765265da514076",
-               measurementId: "G-1VE0XSZESF"
-         };
- 
-         // Initialize Firebase
-         const app = initializeApp(firebaseConfig);
-         const auth = getAuth(app);
- 
-         // Function to handle user state changes (logged in / logged out)
-         window.onload = () => {
-             const loginButton = document.getElementById("login-button");
- 
-             // Check authentication state
-             onAuthStateChanged(auth, (user) => {
-                 if (user) {
-                     // If the user is logged in, display the user's email
-                     loginButton.innerHTML = user.email;
-                     loginButton.onclick = () => signOut(auth).then(() => {
-                         location.reload(); // Refresh page after logout
-                     });
-                 } else {
-                     // If the user is logged out, show "Login"
-                     loginButton.innerHTML = "Login";
-                     loginButton.onclick = () => location.href = "login.html";
-                 }
-             });
-             // Function to save workout data for the logged-in user
-             function saveWorkoutData(movement, reps, duration) {
-                 const user = auth.currentUser;
-                 if (user) {
-                     const userId = user.uid; // Get user ID
-                     const userWorkoutsRef = database.ref("users/" + userId + "/workouts");
-             
-                     // Push new workout data
-                     userWorkoutsRef.push({
-                         movement: movement,
-                         reps: reps,
-                         duration: duration,
-                         timestamp: new Date().toISOString() // Save timestamp for tracking
-                     }).then(() => {
-                         console.log("Workout data saved!");
-                     }).catch((error) => {
-                         console.error("Error saving data:", error);
-                     });
-                 } else {
-                     console.log("User not logged in!");
-                 }
-             }
-             // Function to get a user's workout history
-              function getWorkoutData() {
-                  const user = auth.currentUser;
-                  if (user) {
-                      const userId = user.uid;
-                      const userWorkoutsRef = database.ref("users/" + userId + "/workouts");
-              
-                      // Listen for data changes (real-time updates)
-                      userWorkoutsRef.on("value", (snapshot) => {
-                          if (snapshot.exists()) {
-                              const data = snapshot.val();
-                              console.log("Workout Data:", data);
-                              displayWorkouts(data);
-                          } else {
-                              console.log("No workout data found.");
-                          }
-                      }, (error) => {
-                          console.error("Error retrieving data:", error);
-                      });
-                  } else {
-                      console.log("User not logged in!");
-                  }
-              }
-              
-              // Function to display workouts on the webpage
-              function displayWorkouts(data) {
-                  const workoutContainer = document.getElementById("workout-list");
-                  workoutContainer.innerHTML = "";
-                  Object.keys(data).forEach((key) => {
-                      const workout = data[key];
-                      workoutContainer.innerHTML += `<li>${workout.movement} - ${workout.reps} reps - ${workout.duration}</li>`;
-                  });
-              }
-               auth.onAuthStateChanged((user) => {
-                   if (user) {
-                       console.log("User is logged in:", user.email);
-                       getWorkoutData(); // Fetch user workouts
-                   } else {
-                       console.log("User is logged out");
-                   }
-               });
-          // Sign in test user
-    function signInTestUser() {
-        signInWithEmailAndPassword(auth, "testuser@example.com", "password123")
-        .then(userCredential => {
-            console.log("Test User Signed In:", userCredential.user.email);
-        })
-        .catch(error => {
-            console.error("Sign In Error:", error.message);
-        });
-    }
+<html lang="en" style="height:100%">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track your fitness performance with motion sensors.">
+    <title>SquatSync - Fitness Performance Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js" defer></script>
+</head>
+<body style="height:100%; display:flex; flex-direction:column; justify-content:space-between">
+    <header>
+        <div class="navbar">
+            <div class="logo">SquatSync</div>
+            <div class="logo" ><a href="profile.html" style="color:rgb(255,255,255); text-decoration:none">Profile</a></div>
+            
+        </div>
+    </header>
 
-    // Save test workout data
-    function saveTestWorkout() {
-        const user = auth.currentUser;
-        if (user) {
-            const userId = user.uid;
-            const userWorkoutsRef = ref(database, "users/" + userId + "/workouts");
+    <section class="hero1">
+        <div class="hero-content" style="margin:25px">
+            <h1 style="margin-bottom:100px">How are you working out today?</h1>
+            
+            
+            <a id="cp" href="exercise.html" class="cta-button">I'm using my computer with my phone</a>
+            <a id="pc" href="pc.html" class="cta-button">I'm using my phone with my computer</a>
+            <a id="p" href="p.html" class="cta-button">I'm using only my phone</a>
+            <a id="c" href="exercise.html" class="cta-button">I'm using only my computer</a>
+        </div>
+    </section>
+    
 
-            push(userWorkoutsRef, {
-                movement: "Squats",
-                reps: 15,
-                duration: "30s",
-                timestamp: new Date().toISOString()
-            }).then(() => {
-                console.log("Workout data saved!");
-            }).catch(error => {
-                console.error("Error saving data:", error);
-            });
-        } else {
-            console.log("User not logged in!");
-        }
-    }
-
-         };
-      window.signInTestUser = signInTestUser;
-window.saveTestWorkout = saveTestWorkout;
-window.getWorkoutData = getWorkoutData;
-     </script>
-     <style>
-         * {
-             margin: 0;
-             padding: 0;
-             box-sizing: border-box;
-         }
-         html, body {
-             height: 100%;
-             overflow: hidden;
-         }
-         body {
-             font-family: 'Arial', sans-serif;
-             display: flex;
-             flex-direction: column;
-             align-items: center;
-             justify-content: center;
-             background: linear-gradient(to right, #141e30, #243b55);
-             color: white;
-             text-align: center;
-             width: 100vw;
-             padding: 20px;
-         }
-         nav {
-             position: fixed;
-             top: 0;
-             width: 100%;
-             display: flex;
-             justify-content: space-between;
-             padding: 15px 20px;
-             background: rgba(0, 0, 0, 0.6);
-             z-index: 1000;
-             border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-         }
-         nav .brand {
-             font-size: 2em;
-             font-weight: bold;
-             color: #ff6600;
-         }
-         nav .login-button {
-             background-color: #ff6600;
-             border: none;
-             padding: 10px 20px;
-             color: white;
-             cursor: pointer;
-             font-size: 1em;
-             border-radius: 5px;
-             transition: background-color 0.3s ease;
-         }
-         nav .login-button:hover {
-             background-color: #e65c00;
-         }
-         .buttons-container {
-             display: flex;
-             flex-direction: column;
-             gap: 20px;
-             margin-top: 150px;
-         }
-         .setup-button {
-             background-color: #007bff;
-             border: none;
-             padding: 15px 30px;
-             color: white;
-             cursor: pointer;
-             font-size: 1.2em;
-             border-radius: 5px;
-             width: 300px;
-             transition: background-color 0.3s ease;
-         }
-         .setup-button:hover {
-             background-color: #0056b3;
-         }
-     </style>
- </head>
- <body>
-     <nav>
-         <div class="brand">GravTrack</div>
-         <button class="login-button" id="login-button">Login</button>
-     </nav>
-     <div class="buttons-container">
-         <button class="setup-button" onclick="location.href='setup_phone_computer.html'">Setup with Phone & Computer</button>
-         <button class="setup-button" onclick="location.href='setup_phone.html'">Setup with Phone Only</button>
-         <button class="setup-button" onclick="location.href='setup_computer.html'">Setup with Computer Only</button>
-         <button onclick="signInTestUser()">Sign In Test User</button>
-         <button onclick="saveTestWorkout()">Save Workout Data</button>
-         <button onclick="getWorkoutData()">Get Workout Data</button>
-     </div>
- </body>
- </html>
+    <footer id="contact">
+        <div class="footer-container">
+            <p style="margin:25px">Los Altos Hacks IX</p>
+        </div>
+    </footer>
+</body>
+</html>
