@@ -450,13 +450,13 @@ function staticGrade() {
 
 function startFullscreenCountdown() {
   const screen = document.getElementById('fullscreen-countdown');
-  let count = 3;
+  let count = 5;
   screen.textContent = count;
   screen.style.display = 'flex';
 
   const countdown = setInterval(() => {
     count--;
-    if (count > 0) {
+    if (count >= 0) {
         beep()
       screen.textContent = count;
     } else {
