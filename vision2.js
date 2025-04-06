@@ -163,7 +163,6 @@ function gotPoses(results) {
                     repsLeft = 1 + (2*reps);
                 }
             }
-            currentStretch.innerHTML = "Time Remaining: " + Math.round(time)
 
         } else{
             timer.innerHTML = "" 
