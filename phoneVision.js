@@ -239,6 +239,7 @@ let lastTimestamp = null;
             else {
 
                 if (totalDisp > 0.5) {
+                    displacement = {x: 0, y:0, z:0}
                     repCount++;
                     beep();
                     if (repCount >= 16) {
