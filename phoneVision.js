@@ -139,7 +139,7 @@ let lastTimestamp = null;
           }
           
           const mag = Math.sqrt(x ** 2 + y ** 2 + z ** 2).toFixed(2);
-          
+          document.getElementById("cur").innerHTML = `Current Exercise: ${myWorkouts[workoutIndex]}`
           document.getElementById('mag').textContent = mag;
 
       // displacement = {x:x, y:y, z:z}
@@ -662,7 +662,7 @@ function startFullscreenCountdown() {
         count--;
         if (count >= 0) {
             beep()
-          screen.textContent = count;
+          screen.textContent = "Next exercise in:<br>" + count;
         } else {
           clearInterval(countdown);
           screen.style.display = 'none';
