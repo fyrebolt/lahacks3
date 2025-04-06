@@ -74,6 +74,7 @@ peer.on('connection', connection => {
     conn = connection;
     document.querySelector('canvas').style.display = 'none';
     document.getElementById('peer-id').textContent = 'Phone Connected ✅';
+    startFullscreenCountdown()
     //document.getElementById('startWorkout').disabled = false;
     
     conn.on('data', data => {
@@ -291,7 +292,7 @@ function gotPoses(results) {
   poses = results;
   
   //code starts here
-  if (poses.length > 0){
+  if (poses.length > 0 && myWorkouts.length > 0){
     let pose = poses[0];
     checkDots(pose);
     if (allGood){
