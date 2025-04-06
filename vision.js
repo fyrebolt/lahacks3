@@ -31,14 +31,14 @@ workoutIdealsUp = {
     "Squat": [5, 170, 160, 160, 23.5],
     "Lunges": [5, 170, 160, 160, 23.5],
     "Plank": [73, 170, 160, 23.5, 160],
-    "Wall Sit": [0, 170, 160, 160, 165]
+    "Wall Sit": [25, 85, 50, 50, 23.5]
 }
 
 workoutIdealsDown = {
     "Push Up": [97, 170, 160, 160, 73],
     "Squat": [25, 85, 50, 50, 23.5],
     "Lunges": [15, 140, 110, 110, 23.5],
-}
+25
 //----//
 const peer = new Peer();
 let conn;
@@ -431,10 +431,10 @@ function staticGrade() {
     displacement.z ** 2
   );
     console.log(totalDisp);
-  if (totalDisp < 0.2) grade = 'A+';
-  else if (totalDisp < 0.4) grade = 'A';
-  else if (totalDisp < 0.6) grade = 'B';
-  else if (totalDisp < 1.0) grade = 'C';
+  if (totalDisp < 0.25) grade = 'A+';
+  else if (totalDisp < 0.35) grade = 'A';
+  else if (totalDisp < 0.55) grade = 'B';
+  else if (totalDisp < 1.5) grade = 'C';
   else grade = 'Needs Improvement';
   displacement = { x: 0, y: 0, z: 0 };
 
