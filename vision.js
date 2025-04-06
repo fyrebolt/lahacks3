@@ -468,17 +468,17 @@ function startFullscreenCountdown() {
 }
 
 function beep() {
-  // const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  // const oscillator = audioCtx.createOscillator();
-  // const gainNode = audioCtx.createGain();
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
 
-  // oscillator.type = 'sine';         // sine wave = smooth ding
-  // oscillator.frequency.value = 880; // 880 Hz = a nice high ding
-  // gainNode.gain.value = 0.1;        // volume (0.0 to 1.0)
+  oscillator.type = 'sine';         // sine wave = smooth ding
+  oscillator.frequency.value = 880; // 880 Hz = a nice high ding
+  gainNode.gain.value = 0.1;        // volume (0.0 to 1.0)
 
-  // oscillator.connect(gainNode);
-  // gainNode.connect(audioCtx.destination);
+  oscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
 
-  // oscillator.start();
-  // oscillator.stop(audioCtx.currentTime + 0.2);
+  oscillator.start();
+  oscillator.stop(audioCtx.currentTime + 0.2);
 }
