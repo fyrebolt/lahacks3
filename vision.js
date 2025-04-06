@@ -300,8 +300,10 @@ function gotPoses(results) {
                 time -= 0.005;
             }
             if (time < 0.17){
-                console.log("timer log")
+                console.log("timer log: ")
+                console.log(myWorkouts)
                 myWorkouts.shift(1)
+                console.log(myWorkouts)
                 // console.log("changing displacement to zero by time < 0.17")
                 
                 // console.log(totalDist)
