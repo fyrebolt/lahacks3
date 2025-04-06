@@ -62,8 +62,10 @@
       document.getElementById('peer-id').textContent = 'Phone Connected ✅';
       // document.getElementById('startBtn').disabled = false;
 
+      startTimer()
+      
       conn.on('data', data => {
-        startTimer()
+        
         
         const now = Date.now();
 
