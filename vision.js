@@ -312,6 +312,7 @@ function gotPoses(results) {
                 
                 // console.log(totalDist)
                   gradeText.innerHTML = `Grade: ${staticGrade()}`;
+                startFullscreenCountdown()
                 displacement = {x:0, y:0, z:0}
                 if (myWorkouts.length==0){
                     // window.location.href = "index.html";
@@ -463,6 +464,8 @@ function startFullscreenCountdown() {
       clearInterval(countdown);
       screen.style.display = 'none';
       console.log("Countdown done ✅");
+      time = 15;
+      displacement = {x:0, y:0, z:0};
     }
   }, 1000);
 }
