@@ -17,9 +17,9 @@ const gradeText = document.getElementById("gradeText")
 
 //myWorkouts = sessionStorage.getItem("workout").split(",")
 //reps = sessionStorage.getItem("reps")
-reps = 3
-myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
-//myWorkouts = ["Plank", "Wall Sit"]
+reps = 2
+// myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
+myWorkouts = ["Push Up", "Plank"]
 if (myWorkouts[0] == "Plank" || myWorkouts[0] == "Wall Sit"){
     static = true;
 }
