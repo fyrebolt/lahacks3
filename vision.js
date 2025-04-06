@@ -421,6 +421,7 @@ function draw() {
 
 function staticGrade() {
   let grade = 'No grade detected';
+    console.log("static grade")
     console.log(displacement)
   const totalDisp = Math.sqrt(
     displacement.x ** 2 +
