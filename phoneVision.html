@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.js"></script>
+    <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+    <style>
+    #qr-code { margin: 1rem auto; display: block; }
+    .value { font-size: 1.5rem; margin: 1rem; }
+    #fullscreen-countdown {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: white;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10rem;
+      font-weight: bold;
+      z-index: 999;
+      display: none;
+    }
+  </style>
+
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="fullscreen-countdown">3</div>
+    <<button id="startWorkout" onclick="startFullscreenCountdown()">Start Workout</button>
+    <div id="workoutTopRight">
+      <p id="currentTitle">Current stretch:</p>
+      <p id = "currentStretch"></p>
+      <p id = "fp24"></p>
+      <hr class="hr2">
+      <p id="nextUp">Next up:</p>
+      <p id = "nextStretch"></p>
+      <p id = "fp25"></p>
+      <p id = "gradeText"></p>
+    </div>
+    <div id="peer-id">Generating peer ID...</div>
+      <canvas id="qr-code"></canvas>
+<!--     <div class="value">X: <span id="x">-</span></div>
+  <div class="value">Y: <span id="y">-</span></div>
+  <div class="value">Z: <span id="z">-</span></div> -->
+  <div class="value">Magnitude: <span id="mag">-</span></div>
+
+  <div class="value">Velocity: <span id="vel">0.00</span> m/s</div>
+  <div class="value"> first Displacement: <span id="disp">0.00</span> m</div>
+<!--   <div class="value"> Other Displacement: <span id="other">0.00</span> m</div> -->
+  <h2 id="timer" style="margin-top: 2rem;"></h2>
+    <script src="vision.js"></script>
+  </body>
+</html>
