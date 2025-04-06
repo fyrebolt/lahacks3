@@ -299,10 +299,11 @@ function gotPoses(results) {
             if (time < 0.17){
                 console.log("timer log")
                 myWorkouts.shift(1)
-                console.log("changing displacement to zero by time < 0.17")
-                displacement = {x:0, y:0, z:0}
+                // console.log("changing displacement to zero by time < 0.17")
+                
                 // console.log(totalDist)
                   gradeText.innerHTML = `Grade: ${staticGrade()}`;
+                displacement = {x:0, y:0, z:0}
                 if (myWorkouts.length==0){
                     // window.location.href = "index.html";
                 }
