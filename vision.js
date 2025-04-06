@@ -290,7 +290,10 @@ function gotPoses(results) {
     checkDots(pose);
     if (allGood){
         if (static){
+            console.log(currentIdeals)
+            console.log(myWorkouts)
             currentIdeals = workoutIdealsUp[myWorkouts[0]]
+            console.log(currentIdeals)
             if(getDist(pose, currentIdeals) < 800){
                 time -= 0.02;
             } else{
