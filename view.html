@@ -9,7 +9,7 @@
     body { font-family: sans-serif; text-align: center; padding: 2rem; }
     #qr-code { margin: 1rem auto; display: block; }
     .value { font-size: 1.5rem; margin: 1rem; }
-    #countdown, #startBtn, #stopBtn { margin-top: 1.5rem; font-size: 1.2rem; }
+/*     #countdown, #startBtn, #stopBtn { margin-top: 1.5rem; font-size: 1.2rem; } */
     button { padding: 0.5rem 1rem; font-size: 1rem; margin: 0.5rem; }
   </style>
 </head>
@@ -60,7 +60,7 @@
       conn = connection;
       document.querySelector('canvas').style.display = 'none';
       document.getElementById('peer-id').textContent = 'Phone Connected ✅';
-      document.getElementById('startBtn').disabled = false;
+      // document.getElementById('startBtn').disabled = false;
 
       conn.on('data', data => {
         startTimer()
