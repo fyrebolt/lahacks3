@@ -209,7 +209,6 @@ peer.on('connection', connection => {
 
 
 function preload() {
-    currentIdeals = workoutIdealsUp[myWorkouts[0]]
   bodyPose = ml5.bodyPose("MoveNet", { flipped: true });
 }
 
@@ -396,6 +395,7 @@ function setup() {
   video = createCapture(VIDEO, { flipped: true });
   video.hide();
   bodyPose.detectStart(video, gotPoses);
+  currentIdeals = workoutIdealsUp[myWorkouts[0]]
 }
 
 function draw() {
