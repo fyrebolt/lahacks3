@@ -69,6 +69,7 @@
     let pushing = false;
 
     let otherDisp = 0;
+    let reps = 0;
 
     let queue = ['Plank', "Squat", "Push Ups"]; // update firebase
     let times = [10, 0, 0]; // update firebase
@@ -87,7 +88,6 @@
       document.getElementById('startWorkout').disabled = false;
       
       conn.on('data', data => {
-        
         
         const now = Date.now();
 
