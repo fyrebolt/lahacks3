@@ -96,10 +96,12 @@
         sessionStorage.setItem("workout",workout1)
         console.log(sessionStorage.getItem("workout"))
         if(sessionStorage.getItem("cp")){
-            window.location.href = "vision.html"
+            window.alert(sessionStorage.getItem("cp"))
+            //window.location.href = "vision.html"
         }
         else{
-            window.location.href = "vision2.html"
+            window.alert("hi")
+            //window.location.href = "vision2.html"
         }
     }
     </script>
