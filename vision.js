@@ -18,7 +18,7 @@ const currentStretch = document.getElementById("currentStretch")
 const nextStretch = document.getElementById("nextStretch")
 const fp24 = document.getElementById("fp24")
 const fp25 = document.getElementById("fp25")
-const gradeText = document.getElementById("gradeText")
+// const gradeText = document.getElementById("gradeText")
 
 //myWorkouts = sessionStorage.getItem("workout").split(",")
 //reps = sessionStorage.getItem("reps")
@@ -319,7 +319,7 @@ function gotPoses(results) {
                 // console.log("changing displacement to zero by time < 0.17")
                 
                 // console.log(totalDist)
-                  gradeText.innerHTML = `Grade: ${staticGrade()}`;
+                  // gradeText.innerHTML = `Grade: ${staticGrade()}`;
               
                 startFullscreenCountdown()
                 displacement = {x:0, y:0, z:0}
