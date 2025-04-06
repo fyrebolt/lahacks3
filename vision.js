@@ -31,7 +31,7 @@ workoutIdealsUp = {
     "Squat": [5, 170, 160, 160, 23.5],
     "Lunges": [5, 170, 160, 160, 23.5],
     "Plank": [73, 170, 160, 23.5, 160],
-    "Wall Sit": [25, 85, 50, 50, 23.5]
+    "Wall Sit": [25, 90, 100, 100, 23.5]
 }
 
 workoutIdealsDown = {
