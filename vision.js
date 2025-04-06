@@ -97,7 +97,7 @@ peer.on('connection', connection => {
       document.getElementById('z').textContent = z;
       document.getElementById('mag').textContent = mag;
 
-      displacement = {x:x, y:y, z:z}
+      // displacement = {x:x, y:y, z:z}
       
       // Integrate acceleration to velocity and displacement
       if (lastTimestamp !== null) {
