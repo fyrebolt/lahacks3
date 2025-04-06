@@ -493,10 +493,10 @@ function resultsScreen() {
   let text = "";
 
   for (let i = 0; i < report.length; i++) {
-    text += report[i] + ": " + reportValues[i] + "\n";
+    text += report[i] + ": " + reportValues[i] + "<br>";
   }
   
-  screen.textContent = text;
+  screen.innerHTML = text;
   screen.style.display = 'flex';
 }
 
