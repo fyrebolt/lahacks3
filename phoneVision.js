@@ -650,36 +650,39 @@ function staticGrade() {
 
 
 function startFullscreenCountdown() {
-  inTimer = true;
-  const screen = document.getElementById('fullscreen-countdown');
-  let count = 5;
-  screen.textContent = count;
-  screen.style.display = 'flex';
-
-  const countdown = setInterval(() => {
-    count--;
-    if (count >= 0) {
-        beep()
+  if (!inTimer) {
+        inTimer = true;
+      const screen = document.getElementById('fullscreen-countdown');
+      let count = 5;
       screen.textContent = count;
-    } else {
-      clearInterval(countdown);
-      screen.style.display = 'none';
-      console.log("Countdown done ✅");
-      time = 15;
-      displacement = {x:0, y:0, z:0};
-      timeStart = Date.now();
-
-        inTimer = false;
-
-      if (myWorkouts.length == workoutIndex) {
-          resultsScreen()
-      }
-    }
-  }, 1000);
+      screen.style.display = 'flex';
+    
+      const countdown = setInterval(() => {
+        count--;
+        if (count >= 0) {
+            beep()
+          screen.textContent = count;
+        } else {
+          clearInterval(countdown);
+          screen.style.display = 'none';
+          console.log("Countdown done ✅");
+          time = 15;
+          displacement = {x:0, y:0, z:0};
+          timeStart = Date.now();
+    
+            inTimer = false;
+    
+          if (myWorkouts.length == workoutIndex) {
+              resultsScreen()
+          }
+        }
+      }, 1000);
+  }
 }
 
 function staticTimer() {
   if (!inTimer) {
+      inTimer = true;
       const screen = document.getElementById('fullscreen-countdown');
       let count = 15;
       screen.textContent = count;
