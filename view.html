@@ -202,7 +202,7 @@
         if (seconds > 0) {
           timerDisplay.textContent = `Starting in ${seconds}`
         }
-      });
+      }, 1000);
       
       let timeLeft = x;
       
@@ -218,8 +218,9 @@
           let grade = exercise(queue[currentExerciseIndex]);
           
           timerDisplay.textContent =  `Your grade is ${grade}`;
-          }
-        }, 1000);
+          currentExerciseIndex++;
+        }
+      }, 1000);
     }  
 
     function exercise(name) {
@@ -242,7 +243,6 @@
       for (let i = 0; i < times.length; i++) {
         startTimer(times[i]);
         document.getElementById('currentExercise').textContent = `Current Exercise: ${queue[i]}`
-        currentExerciseIndex++;
       }
     }
 
