@@ -13,6 +13,7 @@ const currentStretch = document.getElementById("currentStretch")
 const nextStretch = document.getElementById("nextStretch")
 const fp24 = document.getElementById("fp24")
 const fp25 = document.getElementById("fp25")
+const gradeText = document.getElementById("gradeText")
 
 //myWorkouts = sessionStorage.getItem("workout").split(",")
 //reps = sessionStorage.getItem("reps")
@@ -296,6 +297,7 @@ function gotPoses(results) {
             if (time < 0.17){
                 console.log("timer log")
                 myWorkouts.shift(1)
+                  gradeText.innerHTML = `Grade: ${staticGrade()}`;
                 if (myWorkouts.length==0){
                     window.location.href = "index.html";
                 }
@@ -407,21 +409,38 @@ function draw() {
   
 }
 
+function staticGrade() {
+  let grade = 'No grade detected';
+  const totalDisp = Math.sqrt(
+    displacement.x ** 2 +
+    displacement.y ** 2 +
+    displacement.z ** 2
+  );
+  if (totalDisp < 0.2) grade = 'A+';
+  else if (totalDisp < 0.4) grade = 'A';
+  else if (totalDisp < 0.6) grade = 'B';
+  else if (totalDisp < 1.0) grade = 'C';
+  else grade = 'Needs Improvement';
+  displacement = { x: 0, y: 0, z: 0 };
+
+  return grade
+}
+
 
 function startFullscreenCountdown() {
-      const screen = document.getElementById('fullscreen-countdown');
-      let count = 3;
-      screen.textContent = count;
-      screen.style.display = 'flex';
+  const screen = document.getElementById('fullscreen-countdown');
+  let count = 3;
+  screen.textContent = count;
+  screen.style.display = 'flex';
 
-      const countdown = setInterval(() => {
-        count--;
-        if (count > 0) {
-          screen.textContent = count;
-        } else {
-          clearInterval(countdown);
-          screen.style.display = 'none';
-          console.log("Countdown done ✅");
-        }
-      }, 1000);
+  const countdown = setInterval(() => {
+    count--;
+    if (count > 0) {
+      screen.textContent = count;
+    } else {
+      clearInterval(countdown);
+      screen.style.display = 'none';
+      console.log("Countdown done ✅");
     }
+  }, 1000);
+}
