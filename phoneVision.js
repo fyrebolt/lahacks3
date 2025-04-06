@@ -97,7 +97,8 @@ let lastTimestamp = null;
             }
           }
 
-          document.getElementById('status').textContent = '📡 Sending motion data...';
+          startFullscreenCountdown();
+          // document.getElementById('status').textContent = '📡 Sending motion data...';
           document.getElementById('startBtn').style.display = 'none';
 
           let acc = { x: 0, y: 0, z: 0 };
