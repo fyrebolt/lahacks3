@@ -227,8 +227,10 @@
     }
 
     function startWorkout() {
-      for (let i = 0; i < queue.length; i++) {
-        startTimer(queue[i]);
+      // reminder: delete button
+      for (let i = 0; i < times.length; i++) {
+        startTimer(times[i]);
+        document.getElementById('currentExercise').textContent = `Current Exercise: ${queue[i]}`
         currentExerciseIndex++;
       }
     }
