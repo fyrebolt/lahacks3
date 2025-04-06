@@ -384,9 +384,9 @@ function draw() {
   }
   if (poses.length > 0 & allGood) {
     let pose = poses[0];
-    //if(static && getDist(pose, currentIdeals) > 800){
-      //  fill(255,0,0);
-    //}
+    if(static && getDist(pose, currentIdeals) > 800){
+        fill(255,0,0);
+    }
     noStroke();
     ellipse(pose.nose.x, pose.nose.y, dotSize)
     ellipse((pose.right_hip.x + pose.left_hip.x)/2, (pose.right_hip.y + pose.left_hip.y)/2, dotSize)
