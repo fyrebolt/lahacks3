@@ -67,7 +67,7 @@ let otherDisp = 0;
 // let currentExerciseIndex = 0;
 
 peer.on('open', id => {
-    document.getElementById('peer-id').textContent = `Your Peer ID: ${id}`;
+    document.getElementById('peer-id').textContent = `Waiting to connect...`;
     const url = `https://fyrebolt.github.io/lahacks3/stream.html?id=${id}`;
     QRCode.toCanvas(document.getElementById('qr-code'), url);
 });
@@ -75,7 +75,7 @@ peer.on('open', id => {
 peer.on('connection', connection => {
     conn = connection;
     document.querySelector('canvas').style.display = 'none';
-    document.getElementById('peer-id').textContent = 'Phone Connected ✅';
+    document.getElementById('peer-id').textContent = 'Connection Secure ✅';
     startFullscreenCountdown()
     //document.getElementById('startWorkout').disabled = false;
     
@@ -104,7 +104,7 @@ peer.on('connection', connection => {
       // document.getElementById('x').textContent = x;
       // document.getElementById('y').textContent = y;
       // document.getElementById('z').textContent = z;
-      document.getElementById('mag').textContent = mag;
+      // document.getElementById('mag').textContent = mag;
 
       // displacement = {x:x, y:y, z:z}
       
@@ -189,8 +189,8 @@ peer.on('connection', connection => {
 
         otherDisp += ((mag) * (dt ** 2) / 2 + totalVel * dt) * 0.8;
 
-        document.getElementById('vel').textContent = totalVel.toFixed(2);
-        document.getElementById('disp').textContent = totalDisp.toFixed(2);
+        // document.getElementById('vel').textContent = totalVel.toFixed(2);
+        // document.getElementById('disp').textContent = totalDisp.toFixed(2);
         // document.getElementById('other').textContent = otherDisp.toFixed(2);
     }
 
