@@ -19,7 +19,7 @@ const gradeText = document.getElementById("gradeText")
 //reps = sessionStorage.getItem("reps")
 reps = 2
 // myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
-myWorkouts = ["Push Up", "Plank", "Wall Sit"]
+myWorkouts = ["Push Up", "Wall Sit"]
 if (myWorkouts[0] == "Plank" || myWorkouts[0] == "Wall Sit"){
     static = true;
 }
