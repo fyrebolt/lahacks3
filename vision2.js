@@ -20,7 +20,8 @@ const timer = document.getElementById("timer")
 const repLeft = document.getElementById("repsLeft")
 timer.innerHTML = ""
 reps = 8
-myWorkouts = ["Push Up", "Wall Sit"]
+myWorkouts = sessionStorage.getItem("workout").split(",")
+
 let report = myWorkouts.slice();
 
 console.log(report)
