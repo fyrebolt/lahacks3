@@ -297,22 +297,18 @@ function gotPoses(results) {
   poses = results;
   
   //code starts here
-console.log("aarav is retarded")
-  if (poses.length > 0 && myWorkouts.length > 0 && loggedIn){
+  if (poses.length > 0 && (myWorkouts.length > 0) && loggedIn){
     let pose = poses[0];
-      console.log("aarav is retarded2")
     checkDots(pose);
-      console.log("aarav is retarded3")
     if (allGood){
         currentStretch.innerHTML = myWorkouts[0]
-        repLeft.innerHTML = "reps left: " + Math.floor(repsLeft/2)
         if (myWorkouts.length>1){
             nextStretch.innerHTML = myWorkouts[1]
         } else{
             nextStretch.innerHTML = "Nothing Left!"
         }
-        console.log("aarav is retarded45")
         if (static){
+            repLeft.innerHTML = ""
             currentIdeals = workoutIdealsUp[myWorkouts[0]]
             timer.innerHTML = time.toFixed(1) + " seconds left" 
             console.log(currentIdeals)
@@ -351,6 +347,7 @@ console.log("aarav is retarded")
         } else{
             wrongPos = false;
             timer.innerHTML = "" 
+            repLeft.innerHTML = "reps left: " + Math.floor(repsLeft/2)
             
             if(getDist(pose, currentIdeals) < 800){
                 repsLeft -= 1;
