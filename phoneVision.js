@@ -87,11 +87,11 @@ let lastTimestamp = null;
             try {
               const response = await DeviceMotionEvent.requestPermission();
               if (response !== 'granted') {
-                document.getElementById('status').textContent = '❌ Motion permission denied';
+                // document.getElementById('status').textContent = '❌ Motion permission denied';
                 return;
               }
             } catch (err) {
-              document.getElementById('status').textContent = '❌ Error requesting permission';
+              // document.getElementById('status').textContent = '❌ Error requesting permission';
               console.error(err);
               return;
             }
