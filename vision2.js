@@ -217,7 +217,8 @@ function gotPoses(results) {
 }
 
 function setup() {
-  createCanvas(640, 480);
+  var canvas = createCanvas(640, 480);
+  canvas.parent('workoutTop')
   video = createCapture(VIDEO, { flipped: true });
   video.hide();
   bodyPose.detectStart(video, gotPoses);
