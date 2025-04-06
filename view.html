@@ -15,7 +15,7 @@
 </head>
 <body>
 
-  <h1>💻 Waiting for Phone Connection</h1>
+  <h1 id="currentExercise">💻 Waiting for Phone Connection</h1>
   <div id="peer-id">Generating peer ID...</div>
   <canvas id="qr-code"></canvas>
 
@@ -193,8 +193,19 @@
     });
 
     function startTimer(x){
-      let timeLeft = x;
+      let seconds = 3
       const timerDisplay = document.getElementById('timer');
+      
+      const countdown = setInterval(() => {
+        seconds--;
+
+        if (seconds > 0) {
+          timerDisplay.textContent = `Starting in ${seconds}`
+        }
+      });
+      
+      let timeLeft = x;
+      
       timerDisplay.textContent = `Time Left: ${timeLeft}s`;
   
       const interval = setInterval(() => {
@@ -203,11 +214,6 @@
           timerDisplay.textContent = `Time Left: ${timeLeft}s`;
         } else {
           clearInterval(interval);
-          const totalDisp = Math.sqrt(
-            displacement.x ** 2 +
-            displacement.y ** 2 +
-            displacement.z ** 2
-          );
         
           let grade = exercise(queue[currentExerciseIndex]);
           
@@ -217,6 +223,11 @@
     }  
 
     function exercise(name) {
+      const totalDisp = Math.sqrt(
+        displacement.x ** 2 +
+        displacement.y ** 2 +
+        displacement.z ** 2
+      );
       if (name == 'Lunge') {
         if (totalDisp < 0.2) grade = 'A+';
           else if (totalDisp < 0.4) grade = 'A';
