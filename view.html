@@ -65,10 +65,13 @@
     let displacement = { x: 0, y: 0, z: 0 };
     let lastTimestamp = null;
 
+    let squating = false;
+    let pushing = false;
+
     let otherDisp = 0;
 
-    let queue = ['Lunge']; // update firebase
-    let times = [10]; // update firebase
+    let queue = ['Plank', "Squat", "Push Ups"]; // update firebase
+    let times = [10, 0, 0]; // update firebase
     let currentExerciseIndex = 0;
 
     peer.on('open', id => {
@@ -104,6 +107,9 @@
           z = 0;
         }
 
+        if (squating || pushing) {
+          detectLow();
+        }
         
         const mag = Math.sqrt(x ** 2 + y ** 2 + z ** 2).toFixed(2);
         
@@ -231,16 +237,6 @@
       // let seconds = 3
       const timerDisplay = document.getElementById('timer');
       
-      // const countdown = setInterval(() => {
-      //   seconds--;
-
-      //   if (seconds > 0) {
-      //     timerDisplay.textContent = `Starting in ${seconds}`
-      //   }
-      //   else {
-      //     clearInterval(countdown);
-      //   }
-      // }, 1000);
       startFullscreenCountdown()
       
       let timeLeft = x;
@@ -269,21 +265,59 @@
         displacement.y ** 2 +
         displacement.z ** 2
       );
-      if (name == 'Lunge') {
+      if (name == 'Plank') {
         if (totalDisp < 0.2) grade = 'A+';
-          else if (totalDisp < 0.4) grade = 'A';
-          else if (totalDisp < 0.6) grade = 'B';
-          else if (totalDisp < 1.0) grade = 'C';
-          else grade = 'Needs Improvement';
+        else if (totalDisp < 0.4) grade = 'A';
+        else if (totalDisp < 0.6) grade = 'B';
+        else if (totalDisp < 1.0) grade = 'C';
+        else grade = 'Needs Improvement';
+        let displacement = { x: 0, y: 0, z: 0 };
       }
 
       return grade
+    }
+    
+    function detectLow() {
+      const totalDisp = Math.sqrt(
+        displacement.x ** 2 +
+        displacement.y ** 2 +
+        displacement.z ** 2
+      );
+      if (squating && totalDisp > 0.5) {
+        console.log("squat done");
+        let displacement = { x: 0, y: 0, z: 0 };
+
+        reps++;
+      }
+      else if (pushing && totalDisp > 0.3) {
+        console.log("push up done");
+        let displacement = { x: 0, y: 0, z: 0 };
+
+        reps++;
+      }
+
+      if (reps == times[currentExerciseIndex]) {
+        squating = false;
+        pushing = false;
+        reps = 0;
+        currentExerciseIndex++;
+        startWorkout();
+      }
     }
 
     function startWorkout() {
       // reminder: delete button
       for (let i = 0; i < times.length; i++) {
-        startTimer(times[i]);
+        if (queue[i] == "Plank") {
+          startTimer(times[i]);
+        }
+        else if (queue[i] == "Squat") {
+          squating = true;
+        }
+        else if (queue[i] == "Push Ups") {
+          pushing = true;
+        }
+        
         document.getElementById('currentExercise').textContent = `Current Exercise: ${queue[i]}`
       }
     }
