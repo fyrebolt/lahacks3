@@ -41,6 +41,22 @@ workoutIdealsDown = {
 //----//
 const peer = new Peer();
 let conn;
+
+let velocity = { x: 0, y: 0, z: 0 };
+let velM = 0;
+let displacement = { x: 0, y: 0, z: 0 };
+let lastTimestamp = null;
+
+let squating = false;
+let pushing = false;
+
+let otherDisp = 0;
+// let reps = 0;
+
+// let queue = ['Plank', "Squat", "Push Ups"]; // update firebase
+// let times = [10, 5, 5]; // update firebase
+// let currentExerciseIndex = 0;
+
 peer.on('open', id => {
     document.getElementById('peer-id').textContent = `Your Peer ID: ${id}`;
     const url = `https://fyrebolt.github.io/lahacks3/stream.html?id=${id}`;
