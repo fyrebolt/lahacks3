@@ -43,7 +43,71 @@
                      loginButton.onclick = () => location.href = "login.html";
                  }
              });
+             // Function to save workout data for the logged-in user
+             function saveWorkoutData(movement, reps, duration) {
+                 const user = auth.currentUser;
+                 if (user) {
+                     const userId = user.uid; // Get user ID
+                     const userWorkoutsRef = database.ref("users/" + userId + "/workouts");
+             
+                     // Push new workout data
+                     userWorkoutsRef.push({
+                         movement: movement,
+                         reps: reps,
+                         duration: duration,
+                         timestamp: new Date().toISOString() // Save timestamp for tracking
+                     }).then(() => {
+                         console.log("Workout data saved!");
+                     }).catch((error) => {
+                         console.error("Error saving data:", error);
+                     });
+                 } else {
+                     console.log("User not logged in!");
+                 }
+             }
+             // Function to get a user's workout history
+              function getWorkoutData() {
+                  const user = auth.currentUser;
+                  if (user) {
+                      const userId = user.uid;
+                      const userWorkoutsRef = database.ref("users/" + userId + "/workouts");
+              
+                      // Listen for data changes (real-time updates)
+                      userWorkoutsRef.on("value", (snapshot) => {
+                          if (snapshot.exists()) {
+                              const data = snapshot.val();
+                              console.log("Workout Data:", data);
+                              displayWorkouts(data);
+                          } else {
+                              console.log("No workout data found.");
+                          }
+                      }, (error) => {
+                          console.error("Error retrieving data:", error);
+                      });
+                  } else {
+                      console.log("User not logged in!");
+                  }
+              }
+              
+              // Function to display workouts on the webpage
+              function displayWorkouts(data) {
+                  const workoutContainer = document.getElementById("workout-list");
+                  workoutContainer.innerHTML = "";
+                  Object.keys(data).forEach((key) => {
+                      const workout = data[key];
+                      workoutContainer.innerHTML += `<li>${workout.movement} - ${workout.reps} reps - ${workout.duration}</li>`;
+                  });
+              }
+               auth.onAuthStateChanged((user) => {
+                   if (user) {
+                       console.log("User is logged in:", user.email);
+                       getWorkoutData(); // Fetch user workouts
+                   } else {
+                       console.log("User is logged out");
+                   }
+               });
          };
+      
      </script>
      <style>
          * {
@@ -127,6 +191,9 @@
          <button class="setup-button" onclick="location.href='setup_phone_computer.html'">Setup with Phone & Computer</button>
          <button class="setup-button" onclick="location.href='setup_phone.html'">Setup with Phone Only</button>
          <button class="setup-button" onclick="location.href='setup_computer.html'">Setup with Computer Only</button>
+         <button onclick="signInTestUser()">Sign In Test User</button>
+         <button onclick="saveTestWorkout()">Save Workout Data</button>
+         <button onclick="getWorkoutData()">Get Workout Data</button>
      </div>
  </body>
  </html>
