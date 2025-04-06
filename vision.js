@@ -8,6 +8,7 @@ let allGood = 1;
 let movementDir = 0
 let static = false;
 let time = 15;
+let wrongPos = false;
 
 const currentStretch = document.getElementById("currentStretch")
 const nextStretch = document.getElementById("nextStretch")
@@ -295,8 +296,10 @@ function gotPoses(results) {
             currentIdeals = workoutIdealsUp[myWorkouts[0]]
             console.log(currentIdeals)
             if(getDist(pose, currentIdeals) < 800){
+                wrongPos = false;
                 time -= 0.02;
             } else{
+                wrongPos = true;
                 time -= 0.005;
             }
             if (time < 0.17){
@@ -324,6 +327,7 @@ function gotPoses(results) {
             currentStretch.innerHTML = "Time Remaining: " + Math.round(time)
 
         } else{
+            wrongPos = false;
             currentStretch.innerHTML = "reps left: " + Math.floor(repsLeft/2) + "  exercise: " + myWorkouts[0]
             if (movementDir==0){
                 nextStretch.innerHTML = "going up"
@@ -345,7 +349,7 @@ function gotPoses(results) {
                         window.location.href = "index.html";
                     }
                     else if (myWorkouts[0]=="Plank" || myWorkouts[0]=="Wall Sit"){
-                        console.log("rv is mid");
+                        console.log("hasty is mid");
                         static=true
                         time = 15;
                     } else{
@@ -386,7 +390,7 @@ function draw() {
   }
   if (poses.length > 0 & allGood) {
     let pose = poses[0];
-    if(static && getDist(pose, currentIdeals) > 800){
+    if(wrongPos){
         fill(255,0,0);
     }
     noStroke();
