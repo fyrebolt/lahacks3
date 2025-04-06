@@ -37,8 +37,8 @@ workoutIdealsUp = {
 workoutIdealsDown = {
     "Push Up": [97, 170, 160, 160, 73],
     "Squat": [25, 85, 50, 50, 23.5],
-    "Lunges": [15, 140, 110, 110, 23.5],
-25
+    "Lunges": [15, 140, 110, 110, 23.5]
+}
 //----//
 const peer = new Peer();
 let conn;
