@@ -95,7 +95,9 @@
         }
         sessionStorage.setItem("workout",workout1)
         console.log(sessionStorage.getItem("workout"))
-        if(sessionStorage.getItem("cp")){
+        let dave = sessionStorage.getItem("cp")
+        window.alert(dave + " l")
+        if(dave==true){
             window.alert(sessionStorage.getItem("cp"))
             //window.location.href = "vision.html"
         }
