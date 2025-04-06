@@ -19,7 +19,7 @@ const gradeText = document.getElementById("gradeText")
 //reps = sessionStorage.getItem("reps")
 reps = 2
 // myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
-myWorkouts = ["Push Up", "Plank"]
+myWorkouts = ["Push Up", "Plank", "Wall Sit"]
 if (myWorkouts[0] == "Plank" || myWorkouts[0] == "Wall Sit"){
     static = true;
 }
@@ -297,6 +297,7 @@ function gotPoses(results) {
             if (time < 0.17){
                 console.log("timer log")
                 myWorkouts.shift(1)
+                // console.log(totalDist)
                   gradeText.innerHTML = `Grade: ${staticGrade()}`;
                 if (myWorkouts.length==0){
                     window.location.href = "index.html";
@@ -411,11 +412,13 @@ function draw() {
 
 function staticGrade() {
   let grade = 'No grade detected';
+    console.log(displacement)
   const totalDisp = Math.sqrt(
     displacement.x ** 2 +
     displacement.y ** 2 +
     displacement.z ** 2
   );
+    console.log(totalDisp);
   if (totalDisp < 0.2) grade = 'A+';
   else if (totalDisp < 0.4) grade = 'A';
   else if (totalDisp < 0.6) grade = 'B';
