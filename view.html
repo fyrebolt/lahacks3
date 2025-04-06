@@ -201,24 +201,22 @@
           timerDisplay.textContent = `Time Left: ${timeLeft}s`;
         } else {
           clearInterval(interval);
-          // stopRecording(); // <-- Make sure this exists in your code
-        }
-      }, 1000);
-
-      const totalDisp = Math.sqrt(
-        displacement.x ** 2 +
-        displacement.y ** 2 +
-        displacement.z ** 2
-      );
-    
-      let grade;
-      if (totalDisp < 0.2) grade = 'A+';
-      else if (totalDisp < 0.4) grade = 'A';
-      else if (totalDisp < 0.6) grade = 'B';
-      else if (totalDisp < 1.0) grade = 'C';
-      else grade = 'Needs Improvement';
-      
-      timerDisplay.textContent =  `Your grade is ${grade}`;
+          const totalDisp = Math.sqrt(
+            displacement.x ** 2 +
+            displacement.y ** 2 +
+            displacement.z ** 2
+          );
+        
+          let grade;
+          if (totalDisp < 0.2) grade = 'A+';
+          else if (totalDisp < 0.4) grade = 'A';
+          else if (totalDisp < 0.6) grade = 'B';
+          else if (totalDisp < 1.0) grade = 'C';
+          else grade = 'Needs Improvement';
+          
+          timerDisplay.textContent =  `Your grade is ${grade}`;
+          }
+        }, 1000);
     }  
 
 
