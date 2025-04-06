@@ -17,7 +17,7 @@ let timeEnd = 0;
 const currentStretch = document.getElementById("currentStretch")
 const nextStretch = document.getElementById("nextStretch")
 const timer = document.getElementById("timer")
-const repsLeft = document.getElementById("repsLeft")
+const repLeft = document.getElementById("repsLeft")
 timer.innerHTML = ""
 reps = 8
 myWorkouts = ["Push Up", "Wall Sit"]
@@ -132,7 +132,7 @@ function gotPoses(results) {
     checkDots(pose);
     if (allGood){
         currentStretch.innerHTML = myWorkouts[0]
-        repsLeft.innerHTML = "reps left: " + Math.floor(repsLeft/2)
+        repLeft.innerHTML = "reps left: " + Math.floor(repsLeft/2)
         if (myWorkouts.length>1){
             nextStretch.innerHTML = myWorkouts[1]
         } else{
