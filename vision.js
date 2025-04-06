@@ -74,7 +74,7 @@ peer.on('open', id => {
 
 peer.on('connection', connection => {
     conn = connection;
-    document.querySelector('canvas').style.display = 'none';
+    document.querySelectorAll('canvas')[1].style.display = 'none';
     document.getElementById('peer-id').textContent = 'Connection Secure ✅';
     startFullscreenCountdown()
     //document.getElementById('startWorkout').disabled = false;
