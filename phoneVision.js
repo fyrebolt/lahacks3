@@ -233,25 +233,25 @@ let lastTimestamp = null;
           }, 100); // update rate in ms
         });
       
-      const now = Date.now();
+      // const now = Date.now();
 
-      let x = data.x.toFixed(2);
-      let y = data.y.toFixed(2);
-      let z = data.z.toFixed(2);
+      // let x = data.x.toFixed(2);
+      // let y = data.y.toFixed(2);
+      // let z = data.z.toFixed(2);
 
-      if (Math.abs(x) < 0.12) {
-        x = 0;
-      }
+      // if (Math.abs(x) < 0.12) {
+      //   x = 0;
+      // }
 
-      if (Math.abs(y) < 0.12) {
-        y = 0;
-      }
+      // if (Math.abs(y) < 0.12) {
+      //   y = 0;
+      // }
 
-      if (Math.abs(z) < 0.12) {
-        z = 0;
-      }
+      // if (Math.abs(z) < 0.12) {
+      //   z = 0;
+      // }
       
-      const mag = Math.sqrt(x ** 2 + y ** 2 + z ** 2).toFixed(2);
+      // const mag = Math.sqrt(x ** 2 + y ** 2 + z ** 2).toFixed(2);
       
       // document.getElementById('x').textContent = x;
       // document.getElementById('y').textContent = y;
