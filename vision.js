@@ -9,7 +9,7 @@ let movementDir = 0
 let static = false;
 let time = 15;
 let wrongPos = false;
-let report = [];
+
 let reportValues = [];
 let timeStart = 0;
 let timeEnd = 0;
@@ -25,7 +25,9 @@ const gradeText = document.getElementById("gradeText")
 reps = 2
 // myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
 myWorkouts = ["Push Up", "Wall Sit"]
-report = myWorkouts
+let report = myWorkouts.slice();
+
+console.log(report)
 if (myWorkouts[0] == "Plank" || myWorkouts[0] == "Wall Sit"){
     static = true;
 }
@@ -323,6 +325,7 @@ function gotPoses(results) {
                 displacement = {x:0, y:0, z:0}
                 if (myWorkouts.length==0){
                     // window.location.href = "index.html";
+                    startFullscreenCountdown()
                 }
                 else if (myWorkouts[0]=="Plank" || myWorkouts[0]=="Wall Sit"){
                     static=true;
@@ -494,6 +497,7 @@ function resultsScreen() {
   }
   
   screen.textContent = text;
+  screen.style.display = 'flex';
 }
 
 function beep() {
