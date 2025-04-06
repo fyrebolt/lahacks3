@@ -9,6 +9,7 @@ let movementDir = 0
 let static = false;
 let time = 15;
 let wrongPos = false;
+let inTimer = false;
 
 let reportValues = [];
 let timeStart = 0;
@@ -234,7 +235,10 @@ let lastTimestamp = null;
             // document.getElementById('other').textContent = otherDisp.toFixed(2);
 
             if (myWorkouts[workoutIndex] == 'Wall Sit' || myWorkouts[workoutIndex] == 'Plank') {
-                staticTimer();
+                if (!inTimer){
+                    staticTimer();
+                    inTimer = true;
+                }
             }
             else {
 
@@ -691,6 +695,7 @@ function staticTimer() {
       timeStart = Date.now();
       beep();
       staticGrade()
+      inTimer = false;
 
       if (myWorkouts.length == workoutIndex) {
           resultsScreen()
