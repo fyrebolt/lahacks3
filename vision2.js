@@ -1,3 +1,4 @@
+// fefasdf
 let video;
 let bodyPose;
 let connections;
@@ -7,17 +8,20 @@ let allGood = 1;
 let movementDir = 0
 let static = false;
 let time = 15;
+let wrongPos = false;
+
+let reportValues = [];
+let timeStart = 0;
+let timeEnd = 0;
 
 const currentStretch = document.getElementById("currentStretch")
 const nextStretch = document.getElementById("nextStretch")
-const fp24 = document.getElementById("fp24")
-const fp25 = document.getElementById("fp25")
+const timer = document.getElementById("timer")
+reps = 8
+myWorkouts = ["Push Up", "Wall Sit"]
+let report = myWorkouts.slice();
 
-//myWorkouts = sessionStorage.getItem("workout").split(",")
-//reps = sessionStorage.getItem("reps")
-reps = 3
-myWorkouts = ["Push Up", "Squat", "Lunges", "Plank", "Wall Sit"]
-//myWorkouts = ["Plank", "Wall Sit"]
+console.log(report)
 if (myWorkouts[0] == "Plank" || myWorkouts[0] == "Wall Sit"){
     static = true;
 }
@@ -29,18 +33,20 @@ workoutIdealsUp = {
     "Squat": [5, 170, 160, 160, 23.5],
     "Lunges": [5, 170, 160, 160, 23.5],
     "Plank": [73, 170, 160, 23.5, 160],
-    "Wall Sit": [0, 170, 160, 160, 165]
+    "Wall Sit": [25, 90, 100, 100, 23.5]
 }
 
 workoutIdealsDown = {
     "Push Up": [97, 170, 160, 160, 73],
     "Squat": [25, 85, 50, 50, 23.5],
-    "Lunges": [15, 140, 110, 110, 23.5],
+    "Lunges": [15, 140, 110, 110, 23.5]
 }
+//----//
 
 function preload() {
     currentIdeals = workoutIdealsUp[myWorkouts[0]]
   bodyPose = ml5.bodyPose("MoveNet", { flipped: true });
+    startFullscreenCountdown()
 }
 
 function getDist(pose, ideals) {
@@ -125,26 +131,37 @@ function gotPoses(results) {
   poses = results;
   
   //code starts here
-  if (poses.length > 0){
+  if (poses.length > 0 && myWorkouts.length > 0){
     let pose = poses[0];
     checkDots(pose);
     if (allGood){
+        currentStretch.innerHTML = myWorkouts[0]
+        if (myWorkouts.length>1){
+            nextStretch.innerHTML = myWorkouts[1]
+        } else{
+            nextStretch.innerHTML = "Nothing Left!"
+        }
         if (static){
             currentIdeals = workoutIdealsUp[myWorkouts[0]]
+            timer.innerHTML = time.toFixed(1) + " seconds left" 
             if(getDist(pose, currentIdeals) < 800){
+                wrongPos = false;
                 time -= 0.02;
             } else{
+                wrongPos = true;
                 time -= 0.005;
             }
             if (time < 0.17){
-                console.log("timer log")
-                myWorkouts.shift(1)
+                beep()
+                myWorkouts.shift(1)       
+                startFullscreenCountdown()
+                displacement = {x:0, y:0, z:0}
                 if (myWorkouts.length==0){
-                    window.location.href = "index.html";
+                    window.location.href = "home.html";
                 }
                 else if (myWorkouts[0]=="Plank" || myWorkouts[0]=="Wall Sit"){
                     static=true;
-                    timer = 15;
+                    time = 15;
                 } else{
                     static = false;
                     repsLeft = 1 + (2*reps);
@@ -153,6 +170,7 @@ function gotPoses(results) {
             currentStretch.innerHTML = "Time Remaining: " + Math.round(time)
 
         } else{
+            wrongPos = false;
             currentStretch.innerHTML = "reps left: " + Math.floor(repsLeft/2) + "  exercise: " + myWorkouts[0]
             if (movementDir==0){
                 nextStretch.innerHTML = "going up"
@@ -162,19 +180,26 @@ function gotPoses(results) {
             
             if(getDist(pose, currentIdeals) < 800){
                 repsLeft -= 1;
-                
+                beep()
                 movementDir = (movementDir + 1)%2
 
                 if (repsLeft <= 0){
                     console.log("reps")
                     myWorkouts.shift(1)
+                    timeEnd = Date.now()
+                    reportValues.push(((timeEnd - timeStart)/1000/reps).toFixed(2) + " seconds per rep");
+                
+                    startFullscreenCountdown()
+                    
+                    displacement = {x:0, y:0, z:0}
                     console.log(myWorkouts)
                     if (myWorkouts.length==0){
-                        window.location.href = "index.html";
+                      window.location.href = "home.html";
                     }
                     else if (myWorkouts[0]=="Plank" || myWorkouts[0]=="Wall Sit"){
-                        static=true;
-                        timer = 15;
+                        console.log("rv is mid");
+                        static=true
+                        time = 15;
                     } else{
                         console.log('iabuefwebwfjw')
                         console.log(myWorkouts)
@@ -198,8 +223,7 @@ function gotPoses(results) {
 }
 
 function setup() {
-  var canvas = createCanvas(640, 480);
-  canvas.parent('workoutTop')
+  createCanvas(640, 480);
   video = createCapture(VIDEO, { flipped: true });
   video.hide();
   bodyPose.detectStart(video, gotPoses);
@@ -214,7 +238,7 @@ function draw() {
   }
   if (poses.length > 0 & allGood) {
     let pose = poses[0];
-    if(static && getDist(pose, currentIdeals) > 800){
+    if(wrongPos){
         fill(255,0,0);
     }
     noStroke();
@@ -249,4 +273,45 @@ function draw() {
     text('Please Remain \nFully in Frame', 340, 240);
   }
   
+}
+
+
+function startFullscreenCountdown() {
+  const screen = document.getElementById('fullscreen-countdown');
+  let count = 5;
+  screen.textContent = count;
+  screen.style.display = 'flex';
+
+  const countdown = setInterval(() => {
+    count--;
+    if (count >= 0) {
+        beep()
+      screen.textContent = count;
+    } else {
+      clearInterval(countdown);
+      screen.style.display = 'none';
+      console.log("Countdown done ✅");
+      time = 15;
+      displacement = {x:0, y:0, z:0};
+      timeStart = Date.now();
+    }
+  }, 1000);
+}
+
+
+
+function beep() {
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+
+  oscillator.type = 'sine';         // sine wave = smooth ding
+  oscillator.frequency.value = 880; // 880 Hz = a nice high ding
+  gainNode.gain.value = 0.1;        // volume (0.0 to 1.0)
+
+  oscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+
+  oscillator.start();
+  oscillator.stop(audioCtx.currentTime + 0.2);
 }
