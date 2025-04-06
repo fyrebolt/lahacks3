@@ -16,8 +16,8 @@ let timeEnd = 0;
 
 const currentStretch = document.getElementById("currentStretch")
 const nextStretch = document.getElementById("nextStretch")
-const fp24 = document.getElementById("fp24")
-const fp25 = document.getElementById("fp25")
+// const fp24 = document.getElementById("fp24")
+// const fp25 = document.getElementById("fp25")
 // const gradeText = document.getElementById("gradeText")
 
 //myWorkouts = sessionStorage.getItem("workout").split(",")
@@ -298,6 +298,13 @@ function gotPoses(results) {
     let pose = poses[0];
     checkDots(pose);
     if (allGood){
+        currentStretch.innerHTML = myWorkouts[0]
+        repLeft.innerHTML = "reps left: " + Math.floor(repsLeft/2)
+        if (myWorkouts.length>1){
+            nextStretch.innerHTML = myWorkouts[1]
+        } else{
+            nextStretch.innerHTML = "Nothing Left!"
+        }
         if (static){
             console.log(currentIdeals)
             console.log(myWorkouts)
