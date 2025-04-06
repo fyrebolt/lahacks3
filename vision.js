@@ -406,3 +406,22 @@ function draw() {
   }
   
 }
+
+
+function startFullscreenCountdown() {
+      const screen = document.getElementById('fullscreen-countdown');
+      let count = 3;
+      screen.textContent = count;
+      screen.style.display = 'flex';
+
+      const countdown = setInterval(() => {
+        count--;
+        if (count > 0) {
+          screen.textContent = count;
+        } else {
+          clearInterval(countdown);
+          screen.style.display = 'none';
+          console.log("Countdown done ✅");
+        }
+      }, 1000);
+    }
