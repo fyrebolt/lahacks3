@@ -351,7 +351,7 @@ function gotPoses(results) {
                     console.log("reps")
                     myWorkouts.shift(1)
                     timeEnd = Date.now()
-                    reportValues.append(((timeEnd - timeStart)/1000/reps).toFixed(2) + " seconds per rep");
+                    reportValues.push(((timeEnd - timeStart)/1000/reps).toFixed(2) + " seconds per rep");
                 
                     startFullscreenCountdown()
                     
@@ -457,7 +457,7 @@ function staticGrade() {
   else grade = 'Needs Improvement';
   displacement = { x: 0, y: 0, z: 0 };
 
-  reportValues.append(grade);
+  reportValues.push(grade);
   return grade
 }
 
